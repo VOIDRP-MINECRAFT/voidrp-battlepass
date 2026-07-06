@@ -13,6 +13,9 @@ battlepass-npc-names:
 # Backend integration (оставь пустым если не используется)
 backend-url: "https://api.void-rp.ru"
 game-auth-secret: ""
+# Опционально: slug сервера для мультисерверной атрибуции. Бэкенд также резолвит
+# сервер по секрету, так что нужно только при общих шаблонах конфига. Пусто = сервер по умолчанию.
+server-slug: ""
 
 # WebGUI integration — открывать /bp через браузер в игре
 webgui:

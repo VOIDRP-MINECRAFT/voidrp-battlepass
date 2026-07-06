@@ -77,9 +77,10 @@ public final class BattlePassPlugin extends JavaPlugin {
         // ── Backend sync ──────────────────────────────────────────────────────
         String backendUrl  = getConfig().getString("backend-url", "");
         String authSecret  = getConfig().getString("game-auth-secret", "");
+        String serverSlug  = getConfig().getString("server-slug", "");
         BackendSyncClient backendClient = null;
         if (!authSecret.isBlank()) {
-            backendClient = new BackendSyncClient(backendUrl, authSecret, getLogger());
+            backendClient = new BackendSyncClient(backendUrl, authSecret, serverSlug, getLogger());
             premiumStorage.setBackend(backendClient);
             getLogger().info("[BattlePass] Backend sync enabled: " + backendUrl);
         } else {

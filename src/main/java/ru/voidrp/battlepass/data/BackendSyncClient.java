@@ -20,16 +20,26 @@ public final class BackendSyncClient {
 
     private final String baseUrl;
     private final String gameAuthSecret;
+    private final String serverSlug;
     private final Logger log;
     private final HttpClient http;
 
-    public BackendSyncClient(String baseUrl, String gameAuthSecret, Logger log) {
+    public BackendSyncClient(String baseUrl, String gameAuthSecret, String serverSlug, Logger log) {
         this.baseUrl         = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.gameAuthSecret  = gameAuthSecret;
+        this.serverSlug      = serverSlug == null ? "" : serverSlug;
         this.log             = log;
         this.http            = HttpClient.newBuilder()
                 .connectTimeout(TIMEOUT)
                 .build();
+    }
+
+    /** Adds the optional X-Server-Slug header for explicit multi-server attribution. */
+    private HttpRequest.Builder withSlug(HttpRequest.Builder rb) {
+        if (!serverSlug.isBlank()) {
+            rb.header("X-Server-Slug", serverSlug);
+        }
+        return rb;
     }
 
     /**
@@ -38,11 +48,11 @@ public final class BackendSyncClient {
      */
     public long fetchPremiumExpiry(String minecraftUuid) {
         try {
-            HttpRequest req = HttpRequest.newBuilder()
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + "/api/v1/battlepass/premium/" + minecraftUuid))
                     .header("X-Game-Auth-Secret", gameAuthSecret)
                     .timeout(TIMEOUT)
-                    .GET()
+                    .GET())
                     .build();
             HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (resp.statusCode() == 404) return 0L;
@@ -74,12 +84,12 @@ public final class BackendSyncClient {
             body.addProperty("days", days);
             if (note != null) body.addProperty("note", note);
 
-            HttpRequest req = HttpRequest.newBuilder()
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + "/api/v1/battlepass/premium/grant"))
                     .header("Content-Type",       "application/json")
                     .header("X-Game-Auth-Secret", gameAuthSecret)
                     .timeout(TIMEOUT)
-                    .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                    .POST(HttpRequest.BodyPublishers.ofString(body.toString())))
                     .build();
             HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (resp.statusCode() != 200 && resp.statusCode() != 201) {
@@ -101,11 +111,11 @@ public final class BackendSyncClient {
      */
     public boolean revokePremium(String minecraftUuid) {
         try {
-            HttpRequest req = HttpRequest.newBuilder()
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + "/api/v1/battlepass/premium/" + minecraftUuid))
                     .header("X-Game-Auth-Secret", gameAuthSecret)
                     .timeout(TIMEOUT)
-                    .DELETE()
+                    .DELETE())
                     .build();
             HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (resp.statusCode() == 404) return true; // already gone
@@ -128,12 +138,12 @@ public final class BackendSyncClient {
             body.addProperty("level", level);
             body.addProperty("xp", xp);
 
-            HttpRequest req = HttpRequest.newBuilder()
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + "/api/v1/battlepass/progress"))
                     .header("Content-Type",       "application/json")
                     .header("X-Game-Auth-Secret", gameAuthSecret)
                     .timeout(TIMEOUT)
-                    .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                    .POST(HttpRequest.BodyPublishers.ofString(body.toString())))
                     .build();
             HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (resp.statusCode() != 200 && resp.statusCode() != 204) {
