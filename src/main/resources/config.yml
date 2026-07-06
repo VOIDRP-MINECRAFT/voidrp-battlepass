@@ -13,3 +13,8 @@ battlepass-npc-names:
 # Backend integration (оставь пустым если не используется)
 backend-url: "https://api.void-rp.ru"
 game-auth-secret: ""
+
+# WebGUI integration — открывать /bp через браузер в игре
+webgui:
+  enabled: false
+  battlepass-url: "https://void-rp.ru/game-ui/battlepass"

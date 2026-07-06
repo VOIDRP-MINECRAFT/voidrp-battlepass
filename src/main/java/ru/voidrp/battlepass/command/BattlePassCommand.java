@@ -68,7 +68,9 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            battlePassGui.open(player);
+            if (!tryOpenWebGui(player)) {
+                battlePassGui.open(player);
+            }
             return true;
         }
 
@@ -423,6 +425,22 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage("§aСинк завершён для §e" + total + " §aигроков.")
                 );
             });
+        }
+    }
+
+    private boolean tryOpenWebGui(Player player) {
+        if (plugin == null) return false;
+        if (!plugin.getConfig().getBoolean("webgui.enabled", false)) return false;
+        String url = plugin.getConfig().getString("webgui.battlepass-url", "https://void-rp.ru/game-ui/battlepass");
+        try {
+            org.bukkit.plugin.Plugin gsPlugin = Bukkit.getPluginManager().getPlugin("VoidRpGameSync");
+            if (gsPlugin == null || !gsPlugin.isEnabled()) return false;
+            Object bridgeService = gsPlugin.getClass().getMethod("getWebGuiBridgeService").invoke(gsPlugin);
+            if (bridgeService == null) return false;
+            bridgeService.getClass().getMethod("openGui", Player.class, String.class).invoke(bridgeService, player, url);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
