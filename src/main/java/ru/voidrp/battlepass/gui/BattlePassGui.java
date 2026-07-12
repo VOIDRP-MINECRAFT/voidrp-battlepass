@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class BattlePassGui {
 
     private static final int LEVELS_PER_PAGE = 9;
-    private static final int TOTAL_LEVELS = 1000;
+    private static final int TOTAL_LEVELS = BattlePassData.MAX_LEVEL;
 
     /** Tracks which page each player currently has open. */
     public static final ConcurrentHashMap<UUID, Integer> PLAYER_PAGE = new ConcurrentHashMap<>();
@@ -96,9 +96,9 @@ public final class BattlePassGui {
         xpMeta.setDisplayName("§aОпыт Battle Pass");
         List<String> xpLore = new ArrayList<>();
         xpLore.add("§7Всего XP: §e" + data.getXp());
-        xpLore.add("§7Уровень: §e" + level + "§7/§e1000");
-        if (level < 1000) {
-            xpLore.add("§7Прогресс: §e" + xpInLevel + "§7/§e1000 XP");
+        xpLore.add("§7Уровень: §e" + level + "§7/§e" + BattlePassData.MAX_LEVEL);
+        if (level < BattlePassData.MAX_LEVEL) {
+            xpLore.add("§7Прогресс: §e" + xpInLevel + "§7/§e" + BattlePassData.XP_PER_LEVEL + " XP");
             xpLore.add("§7До следующего: §e" + toNext + " XP");
         } else {
             xpLore.add("§6✦ §aМаксимальный уровень!");
@@ -229,10 +229,10 @@ public final class BattlePassGui {
         inv.setItem(48, questsBtn);
 
         // Slot 49: current level display
-        Material levelMat = (playerLevel >= 1000) ? Material.NETHER_STAR : Material.GOLD_INGOT;
+        Material levelMat = (playerLevel >= BattlePassData.MAX_LEVEL) ? Material.NETHER_STAR : Material.GOLD_INGOT;
         ItemStack levelItem = new ItemStack(levelMat);
         ItemMeta lm = levelItem.getItemMeta();
-        lm.setDisplayName("§6Уровень §e" + playerLevel + "§6/1000");
+        lm.setDisplayName("§6Уровень §e" + playerLevel + "§6/" + BattlePassData.MAX_LEVEL);
         List<String> ll2 = new ArrayList<>();
         ll2.add("§7XP: §e" + data.getXp());
         ll2.add("§7Страница: §e" + (clampedPage + 1) + "§7/§e" + totalPages);

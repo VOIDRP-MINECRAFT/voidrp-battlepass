@@ -49,11 +49,11 @@ public final class BattlePassStorage {
         return oldLevel;
     }
 
-    /** Sets xp to (level-1)*1000, clamped. */
+    /** Sets xp to (level-1)*XP_PER_LEVEL, clamped to [1, MAX_LEVEL]. */
     public void setLevel(UUID uuid, int level) {
         BattlePassData data = get(uuid);
-        int clamped = Math.max(1, Math.min(1000, level));
-        data.setXp((long) (clamped - 1) * 1000L);
+        int clamped = Math.max(1, Math.min(BattlePassData.MAX_LEVEL, level));
+        data.setXp((long) (clamped - 1) * BattlePassData.XP_PER_LEVEL);
     }
 
     public void save(UUID uuid) {

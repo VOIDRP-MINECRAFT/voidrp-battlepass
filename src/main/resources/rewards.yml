@@ -1,249 +1,204 @@
+# VoidRP Battle Pass — Сезон 2 (FTB Evolution) — 100 уровней
+# Сгенерировано gen_rewards.py. Все ftbevolution: ID валидированы по паку.
 free:
-  1:   {type: MONEY, amount: 500}
-  2:   {type: ITEM, material: BREAD, count: 16, displayName: "Хлеб ×16"}
-  3:   {type: MONEY, amount: 500}
-  4:   {type: ITEM, material: IRON_INGOT, count: 8, displayName: "Железный слиток ×8"}
-  5:   {type: MONEY, amount: 2000}
-  6:   {type: ITEM, material: COOKED_BEEF, count: 16, displayName: "Стейк ×16"}
-  7:   {type: EXP, amount: 150}
-  8:   {type: ITEM, material: IRON_INGOT, count: 16, displayName: "Железный слиток ×16"}
-  9:   {type: MONEY, amount: 600}
-  10:  {type: ITEM, material: DIAMOND, count: 2, displayName: "Алмаз ×2"}
-  11:  {type: MONEY, amount: 700}
-  12:  {type: ITEM, material: BOW, count: 1, displayName: "Лук ×1"}
-  13:  {type: EXP, amount: 200}
-  14:  {type: ITEM, material: OBSIDIAN, count: 8, displayName: "Обсидиан ×8"}
-  15:  {type: MONEY, amount: 5000}
-  16:  {type: ITEM, material: GOLDEN_APPLE, count: 2, displayName: "Золотое яблоко ×2"}
-  17:  {type: EXP, amount: 200}
-  18:  {type: ITEM, material: IRON_CHESTPLATE, count: 1, displayName: "Железный нагрудник ×1"}
-  19:  {type: MONEY, amount: 800}
-  20:  {type: ITEM, material: DIAMOND, count: 4, displayName: "Алмаз ×4"}
-  21:  {type: ITEM, material: COOKED_BEEF, count: 32, displayName: "Стейк ×32"}
-  22:  {type: MONEY, amount: 900}
-  23:  {type: EXP, amount: 250}
-  24:  {type: ITEM, material: BLAZE_ROD, count: 8, displayName: "Стержень призрака ×8"}
-  25:  {type: MONEY, amount: 8000}
-  26:  {type: ITEM, material: EMERALD, count: 4, displayName: "Изумруд ×4"}
-  27:  {type: EXP, amount: 250}
-  28:  {type: ITEM, material: OBSIDIAN, count: 32, displayName: "Обсидиан ×32"}
-  29:  {type: MONEY, amount: 1000}
-  30:  {type: ITEM, material: DIAMOND, count: 6, displayName: "Алмаз ×6"}
-  31:  {type: MONEY, amount: 1200}
-  32:  {type: EXP, amount: 300}
-  33:  {type: ITEM, material: IRON_BLOCK, count: 4, displayName: "Железный блок ×4"}
-  34:  {type: MONEY, amount: 1200}
-  35:  {type: MONEY, amount: 12000}
-  36:  {type: ITEM, material: ENDER_PEARL, count: 8, displayName: "Жемчуг Края ×8"}
-  37:  {type: EXP, amount: 300}
-  38:  {type: ITEM, material: GOLDEN_APPLE, count: 4, displayName: "Золотое яблоко ×4"}
-  39:  {type: MONEY, amount: 1200}
-  40:  {type: ITEM, material: DIAMOND, count: 8, displayName: "Алмаз ×8"}
-  41:  {type: EXP, amount: 350}
-  42:  {type: ITEM, material: BLAZE_POWDER, count: 16, displayName: "Порошок призрака ×16"}
-  43:  {type: MONEY, amount: 1500}
-  44:  {type: ITEM, material: IRON_BLOCK, count: 8, displayName: "Железный блок ×8"}
-  45:  {type: MONEY, amount: 18000}
-  46:  {type: ITEM, material: EMERALD, count: 8, displayName: "Изумруд ×8"}
-  47:  {type: EXP, amount: 400}
-  48:  {type: ITEM, material: GOLDEN_APPLE, count: 6, displayName: "Золотое яблоко ×6"}
-  49:  {type: MONEY, amount: 1500}
-  50:  {type: ITEM, material: DIAMOND, count: 10, displayName: "Алмаз ×10"}
-  51:  {type: MONEY, amount: 1500}
-  52:  {type: EXP, amount: 500}
-  53:  {type: ITEM, material: GHAST_TEAR, count: 4, displayName: "Слеза гаста ×4"}
-  54:  {type: MONEY, amount: 1500}
-  55:  {type: MONEY, amount: 22000}
-  56:  {type: ITEM, material: GOLD_BLOCK, count: 4, displayName: "Золотой блок ×4"}
-  57:  {type: EXP, amount: 500}
-  58:  {type: ITEM, material: IRON_BLOCK, count: 16, displayName: "Железный блок ×16"}
-  59:  {type: MONEY, amount: 2000}
-  60:  {type: ITEM, material: DIAMOND, count: 16, displayName: "Алмаз ×16"}
-  61:  {type: MONEY, amount: 2000}
-  62:  {type: EXP, amount: 600}
-  63:  {type: ITEM, material: DIAMOND_BLOCK, count: 1, displayName: "Алмазный блок ×1"}
-  64:  {type: MONEY, amount: 2000}
-  65:  {type: MONEY, amount: 28000}
-  66:  {type: ITEM, material: GOLDEN_APPLE, count: 8, displayName: "Золотое яблоко ×8"}
-  67:  {type: EXP, amount: 600}
-  68:  {type: ITEM, material: EMERALD, count: 16, displayName: "Изумруд ×16"}
-  69:  {type: MONEY, amount: 2000}
-  70:  {type: ITEM, material: DIAMOND_BLOCK, count: 2, displayName: "Алмазный блок ×2"}
-  71:  {type: MONEY, amount: 2500}
-  72:  {type: EXP, amount: 700}
-  73:  {type: ITEM, material: ENDER_PEARL, count: 16, displayName: "Жемчуг Края ×16"}
-  74:  {type: MONEY, amount: 2500}
-  75:  {type: MONEY, amount: 35000}
-  76:  {type: ITEM, material: NETHERITE_SCRAP, count: 1, displayName: "Обломок незерита ×1"}
-  77:  {type: MONEY, amount: 2500}
-  78:  {type: EXP, amount: 700}
-  79:  {type: ITEM, material: GOLD_BLOCK, count: 8, displayName: "Золотой блок ×8"}
-  80:  {type: ITEM, material: DIAMOND_BLOCK, count: 3, displayName: "Алмазный блок ×3"}
-  81:  {type: MONEY, amount: 3000}
-  82:  {type: EXP, amount: 800}
-  83:  {type: ITEM, material: SHULKER_SHELL, count: 2, displayName: "Панцирь шалкера ×2"}
-  84:  {type: MONEY, amount: 3000}
-  85:  {type: MONEY, amount: 40000}
-  86:  {type: ITEM, material: GOLDEN_APPLE, count: 16, displayName: "Золотое яблоко ×16"}
-  87:  {type: EXP, amount: 800}
-  88:  {type: ITEM, material: NETHERITE_SCRAP, count: 2, displayName: "Обломок незерита ×2"}
-  89:  {type: MONEY, amount: 3000}
-  90:  {type: ITEM, material: DIAMOND_BLOCK, count: 4, displayName: "Алмазный блок ×4"}
-  91:  {type: MONEY, amount: 3500}
-  92:  {type: EXP, amount: 1000}
-  93:  {type: ITEM, material: NETHERITE_SCRAP, count: 3, displayName: "Обломок незерита ×3"}
-  94:  {type: MONEY, amount: 3500}
-  95:  {type: MONEY, amount: 45000}
-  96:  {type: ITEM, material: GOLD_BLOCK, count: 16, displayName: "Золотой блок ×16"}
-  97:  {type: EXP, amount: 1000}
-  98:  {type: ITEM, material: NETHERITE_SCRAP, count: 4, displayName: "Обломок незерита ×4"}
-  99:  {type: MONEY, amount: 3500}
-  100: {type: ITEM, material: DIAMOND_BLOCK, count: 5, displayName: "Алмазный блок ×5"}
-  101: {type: MONEY, amount: 4000}
-  102: {type: EXP, amount: 1200}
-  103: {type: ITEM, material: NETHERITE_INGOT, count: 1, displayName: "Слиток незерита ×1"}
-  104: {type: MONEY, amount: 4000}
-  105: {type: MONEY, amount: 55000}
-  106: {type: ITEM, material: NETHERITE_SCRAP, count: 8, displayName: "Обломок незерита ×8"}
-  107: {type: EXP, amount: 1200}
-  108: {type: ITEM, material: NETHERITE_INGOT, count: 2, displayName: "Слиток незерита ×2"}
-  109: {type: MONEY, amount: 4000}
-  110: {type: ITEM, material: DIAMOND_BLOCK, count: 6, displayName: "Алмазный блок ×6"}
-  111: {type: MONEY, amount: 5000}
-  112: {type: EXP, amount: 1500}
-  113: {type: ITEM, material: NETHERITE_INGOT, count: 3, displayName: "Слиток незерита ×3"}
-  114: {type: MONEY, amount: 5000}
-  115: {type: MONEY, amount: 70000}
-  116: {type: ITEM, material: DIAMOND_BLOCK, count: 8, displayName: "Алмазный блок ×8"}
-  117: {type: EXP, amount: 1500}
-  118: {type: ITEM, material: NETHERITE_INGOT, count: 4, displayName: "Слиток незерита ×4"}
-  119: {type: MONEY, amount: 5000}
-  120: {type: ITEM, material: NETHER_STAR, count: 2, displayName: "Звезда нижнего мира ×2"}
-
+  1: {type: MONEY, amount: 1000}
+  2: {type: EXP, amount: 106}
+  3: {type: ITEM, material: COOKED_BEEF, count: 16, displayName: "Стейк ×16"}
+  4: {type: MONEY, amount: 1000}
+  5: {type: EXP, amount: 115}
+  6: {type: ITEM, material: COAL, count: 32, displayName: "Уголь ×32"}
+  7: {type: MONEY, amount: 1000}
+  8: {type: EXP, amount: 124}
+  9: {type: ITEM, material: IRON_INGOT, count: 16, displayName: "Железный слиток ×16"}
+  10: {type: MONEY, amount: 1000}
+  11: {type: EXP, amount: 133}
+  12: {type: ITEM, material: ARROW, count: 32, displayName: "Стрелы ×32"}
+  13: {type: MONEY, amount: 2000}
+  14: {type: EXP, amount: 142}
+  15: {type: ITEM, material: GOLD_INGOT, count: 8, displayName: "Золотой слиток ×8"}
+  16: {type: MONEY, amount: 2000}
+  17: {type: EXP, amount: 151}
+  18: {type: ITEM, material: IRON_BLOCK, count: 2, displayName: "Железный блок ×2"}
+  19: {type: MONEY, amount: 2000}
+  20: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:xy_aluminum_dust 1", displayName: "Ксилюминиевая пыль"}
+  21: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 8, displayName: "Бутыль опыта ×8"}
+  22: {type: MONEY, amount: 3000}
+  23: {type: EXP, amount: 169}
+  24: {type: ITEM, material: REDSTONE, count: 32, displayName: "Редстоун ×32"}
+  25: {type: MONEY, amount: 3000}
+  26: {type: EXP, amount: 178}
+  27: {type: ITEM, material: GHAST_TEAR, count: 2, displayName: "Слеза гаста ×2"}
+  28: {type: MONEY, amount: 3000}
+  29: {type: EXP, amount: 187}
+  30: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:ruby_gem 1", displayName: "Рубин"}
+  31: {type: MONEY, amount: 4000}
+  32: {type: EXP, amount: 196}
+  33: {type: ITEM, material: GOLD_BLOCK, count: 2, displayName: "Золотой блок ×2"}
+  34: {type: MONEY, amount: 4000}
+  35: {type: EXP, amount: 205}
+  36: {type: ITEM, material: ENDER_PEARL, count: 8, displayName: "Жемчуг Края ×8"}
+  37: {type: MONEY, amount: 4000}
+  38: {type: EXP, amount: 214}
+  39: {type: ITEM, material: BLAZE_ROD, count: 8, displayName: "Огненный стержень ×8"}
+  40: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:eclipse_alloy_plate 1", displayName: "Пластина сплава Затмения"}
+  41: {type: EXP, amount: 223}
+  42: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 16, displayName: "Бутыль опыта ×16"}
+  43: {type: MONEY, amount: 5000}
+  44: {type: EXP, amount: 232}
+  45: {type: ITEM, material: REDSTONE_BLOCK, count: 8, displayName: "Блок редстоуна ×8"}
+  46: {type: MONEY, amount: 5000}
+  47: {type: EXP, amount: 241}
+  48: {type: ITEM, material: DIAMOND, count: 8, displayName: "Алмаз ×8"}
+  49: {type: MONEY, amount: 5000}
+  50: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:crystalline_element 1", displayName: "Кристаллический элемент"}
+  51: {type: ITEM, material: EMERALD, count: 8, displayName: "Изумруд ×8"}
+  52: {type: MONEY, amount: 6000}
+  53: {type: EXP, amount: 259}
+  54: {type: ITEM, material: OBSIDIAN, count: 16, displayName: "Обсидиан ×16"}
+  55: {type: MONEY, amount: 6000}
+  56: {type: EXP, amount: 268}
+  57: {type: ITEM, material: PHANTOM_MEMBRANE, count: 8, displayName: "Мембрана фантома ×8"}
+  58: {type: MONEY, amount: 6000}
+  59: {type: EXP, amount: 277}
+  60: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:shriveling_mixture 1", displayName: "Иссушающая смесь"}
+  61: {type: MONEY, amount: 7000}
+  62: {type: EXP, amount: 286}
+  63: {type: ITEM, material: NETHERITE_SCRAP, count: 1, displayName: "Обломки незерита ×1"}
+  64: {type: MONEY, amount: 7000}
+  65: {type: EXP, amount: 295}
+  66: {type: ITEM, material: ENDER_EYE, count: 8, displayName: "Око Края ×8"}
+  67: {type: MONEY, amount: 7000}
+  68: {type: EXP, amount: 304}
+  69: {type: ITEM, material: GHAST_TEAR, count: 4, displayName: "Слеза гаста ×4"}
+  70: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:sludge_baby 1", displayName: "Слизевый малыш"}
+  71: {type: EXP, amount: 313}
+  72: {type: ITEM, material: SHULKER_SHELL, count: 2, displayName: "Панцирь шалкера ×2"}
+  73: {type: MONEY, amount: 8000}
+  74: {type: EXP, amount: 322}
+  75: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 32, displayName: "Бутыль опыта ×32"}
+  76: {type: MONEY, amount: 8000}
+  77: {type: EXP, amount: 331}
+  78: {type: ITEM, material: DIAMOND, count: 16, displayName: "Алмаз ×16"}
+  79: {type: MONEY, amount: 8000}
+  80: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:white_star 1", displayName: "Белая звезда"}
+  81: {type: ITEM, material: DIAMOND_BLOCK, count: 2, displayName: "Алмазный блок ×2"}
+  82: {type: MONEY, amount: 9000}
+  83: {type: EXP, amount: 349}
+  84: {type: ITEM, material: NETHERITE_SCRAP, count: 3, displayName: "Обломки незерита ×3"}
+  85: {type: MONEY, amount: 9000}
+  86: {type: EXP, amount: 358}
+  87: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 48, displayName: "Бутыль опыта ×48"}
+  88: {type: MONEY, amount: 9000}
+  89: {type: EXP, amount: 367}
+  90: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:refined_nitro_crystal 1", displayName: "Очищенный нитрокристалл"}
+  91: {type: MONEY, amount: 10000}
+  92: {type: EXP, amount: 376}
+  93: {type: ITEM, material: TOTEM_OF_UNDYING, count: 1, displayName: "Тотем бессмертия ×1"}
+  94: {type: MONEY, amount: 10000}
+  95: {type: EXP, amount: 385}
+  96: {type: ITEM, material: NETHERITE_INGOT, count: 2, displayName: "Незеритовый слиток ×2"}
+  97: {type: MONEY, amount: 10000}
+  98: {type: EXP, amount: 394}
+  99: {type: ITEM, material: ENCHANTED_GOLDEN_APPLE, count: 1, displayName: "Зачарованное золотое яблоко ×1"}
+  100: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:awakened_crystalline_shard 1", displayName: "Пробуждённый кристальный осколок"}
 premium:
-  # ── Levels 1-20: Ice and Fire — первые трофеи ─────────────────────────────
-  1:   {type: MONEY, amount: 3000}
-  2:   {type: COMMAND, command: "/minecraft:give {player} iceandfire:ice_dragon_scale 8", displayName: "Чешуя Ледяного Дракона ×8"}
-  3:   {type: MONEY, amount: 3000}
-  4:   {type: COMMAND, command: "/minecraft:give {player} twilightforest:ironwood_ingot 16", displayName: "Слиток Железного Дерева ×16"}
-  5:   {type: MONEY, amount: 5000}
-  6:   {type: COMMAND, command: "/minecraft:give {player} iceandfire:fire_dragon_scale 12", displayName: "Чешуя Огненного Дракона ×12"}
-  7:   {type: EXP, amount: 500}
-  8:   {type: COMMAND, command: "/minecraft:give {player} twilightforest:naga_scale 16", displayName: "Чешуя Наги ×16"}
-  9:   {type: MONEY, amount: 2000}
-  10:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_fire_ingot 4", displayName: "Сталь Огненного Дракона ×4"}
-  11:  {type: MONEY, amount: 2000}
-  12:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:steeleaf 32", displayName: "Стальной Лист ×32"}
-  13:  {type: MONEY, amount: 2000}
-  14:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_ice_ingot 4", displayName: "Сталь Ледяного Дракона ×4"}
-  15:  {type: MONEY, amount: 15000}
-  16:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:sea_serpent_scale 16", displayName: "Чешуя Морского Змея ×16"}
-  17:  {type: EXP, amount: 700}
-  18:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:fiery_blood 8", displayName: "Огненная Кровь ×8"}
-  19:  {type: MONEY, amount: 2500}
-  20:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:fiery_ingot 16", displayName: "Огненный Слиток ×16"}
-  # ── Levels 21-40: Twilight Forest + IaF Dragonsteel ───────────────────────
-  21:  {type: MONEY, amount: 2500}
-  22:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_fire_ingot 8", displayName: "Сталь Огненного Дракона ×8"}
-  23:  {type: EXP, amount: 800}
-  24:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_ice_ingot 8", displayName: "Сталь Ледяного Дракона ×8"}
-  25:  {type: MONEY, amount: 25000}
-  26:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:knightmetal_ingot 16", displayName: "Рыцарский Металл ×16"}
-  27:  {type: EXP, amount: 800}
-  28:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:carminite 8", displayName: "Кармин ×8"}
-  29:  {type: MONEY, amount: 3000}
-  30:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragon_heart 1", displayName: "Сердце Дракона ×1"}
-  31:  {type: MONEY, amount: 3000}
-  32:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_fire_ingot 16", displayName: "Сталь Огненного Дракона ×16"}
-  33:  {type: EXP, amount: 1000}
-  34:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_ice_ingot 16", displayName: "Сталь Ледяного Дракона ×16"}
-  35:  {type: MONEY, amount: 35000}
-  36:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:knightmetal_ingot 32", displayName: "Рыцарский Металл ×32"}
-  37:  {type: EXP, amount: 1000}
-  38:  {type: COMMAND, command: "/minecraft:give {player} twilightforest:fiery_ingot 32", displayName: "Огненный Слиток ×32"}
-  39:  {type: MONEY, amount: 3000}
-  40:  {type: MONEY, amount: 40000}
-  # ── Levels 41-60: Draconic Evolution — начало ─────────────────────────────
-  41:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 32", displayName: "Слиток Дракониума ×32"}
-  42:  {type: EXP, amount: 1200}
-  43:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonbone 16", displayName: "Кость Дракона ×16"}
-  44:  {type: MONEY, amount: 3500}
-  45:  {type: MONEY, amount: 45000}
-  46:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 1", displayName: "Ядро Виверны ×1"}
-  47:  {type: EXP, amount: 1200}
-  48:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 64", displayName: "Слиток Дракониума ×64"}
-  49:  {type: MONEY, amount: 3500}
-  50:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_core 1", displayName: "Драконье Ядро ×1"}
-  51:  {type: MONEY, amount: 4000}
-  52:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_fire_ingot 32", displayName: "Сталь Огненного Дракона ×32"}
-  53:  {type: EXP, amount: 1500}
-  54:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragonsteel_ice_ingot 32", displayName: "Сталь Ледяного Дракона ×32"}
-  55:  {type: MONEY, amount: 55000}
-  56:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 2", displayName: "Ядро Виверны ×2"}
-  57:  {type: EXP, amount: 1500}
-  58:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_core 2", displayName: "Драконье Ядро ×2"}
-  59:  {type: MONEY, amount: 4000}
-  60:  {type: MONEY, amount: 60000}
-  # ── Levels 61-80: Draconic Evolution — Awakened ───────────────────────────
-  61:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragon_heart 2", displayName: "Сердце Дракона ×2"}
-  62:  {type: EXP, amount: 2000}
-  63:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 8", displayName: "Пробуждённый Дракониум ×8"}
-  64:  {type: MONEY, amount: 5000}
-  65:  {type: MONEY, amount: 65000}
-  66:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 3", displayName: "Ядро Виверны ×3"}
-  67:  {type: EXP, amount: 2000}
-  68:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 16", displayName: "Пробуждённый Дракониум ×16"}
-  69:  {type: MONEY, amount: 5000}
-  70:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_core 3", displayName: "Драконье Ядро ×3"}
-  71:  {type: MONEY, amount: 6000}
-  72:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 32", displayName: "Пробуждённый Дракониум ×32"}
-  73:  {type: EXP, amount: 2000}
-  74:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 1", displayName: "Пробуждённое Ядро ×1"}
-  75:  {type: MONEY, amount: 75000}
-  76:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 64", displayName: "Пробуждённый Дракониум ×64"}
-  77:  {type: EXP, amount: 2000}
-  78:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 2", displayName: "Пробуждённое Ядро ×2"}
-  79:  {type: MONEY, amount: 6000}
-  80:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 4", displayName: "Пробуждённый Дракониум ×4"}
-  # ── Levels 81-100: Endgame материалы ─────────────────────────────────────
-  81:  {type: MONEY, amount: 7000}
-  82:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 3", displayName: "Пробуждённое Ядро ×3"}
-  83:  {type: EXP, amount: 2500}
-  84:  {type: COMMAND, command: "/minecraft:give {player} iceandfire:dragon_heart 3", displayName: "Сердце Дракона ×3"}
-  85:  {type: MONEY, amount: 85000}
-  86:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_core 4", displayName: "Драконье Ядро ×4"}
-  87:  {type: EXP, amount: 2500}
-  88:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 4", displayName: "Пробуждённое Ядро ×4"}
-  89:  {type: MONEY, amount: 7000}
-  90:  {type: MONEY, amount: 90000}
-  91:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 1", displayName: "Хаотическое Ядро ×1"}
-  92:  {type: EXP, amount: 2500}
-  93:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 5", displayName: "Пробуждённое Ядро ×5"}
-  94:  {type: MONEY, amount: 8000}
-  95:  {type: MONEY, amount: 95000}
-  96:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 2", displayName: "Хаотическое Ядро ×2"}
-  97:  {type: EXP, amount: 2500}
-  98:  {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 6", displayName: "Пробуждённое Ядро ×6"}
-  99:  {type: MONEY, amount: 8000}
-  100: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:dragon_heart 2", displayName: "Сердце Дракона (DE) ×2"}
-  # ── Levels 101-120: Chaos tier ────────────────────────────────────────────
-  101: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 3", displayName: "Хаотическое Ядро ×3"}
-  102: {type: EXP, amount: 3000}
-  103: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 8", displayName: "Пробуждённое Ядро ×8"}
-  104: {type: MONEY, amount: 10000}
-  105: {type: MONEY, amount: 150000}
-  106: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 1", displayName: "Осколок Хаоса ×1"}
-  107: {type: EXP, amount: 3000}
-  108: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 4", displayName: "Хаотическое Ядро ×4"}
-  109: {type: MONEY, amount: 10000}
-  110: {type: COMMAND, command: "/minecraft:give {player} minecraft:nether_star 3", displayName: "Звезда Нижнего Мира ×3"}
-  111: {type: MONEY, amount: 15000}
-  112: {type: EXP, amount: 3000}
-  113: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 2", displayName: "Осколок Хаоса ×2"}
-  114: {type: MONEY, amount: 15000}
-  115: {type: MONEY, amount: 200000}
-  116: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 5", displayName: "Хаотическое Ядро ×5"}
-  117: {type: EXP, amount: 3000}
-  118: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 4", displayName: "Осколок Хаоса ×4"}
-  119: {type: MONEY, amount: 200000}
-  120: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 5", displayName: "Осколок Хаоса ×5"}
+  1: {type: MONEY, amount: 3000}
+  2: {type: EXP, amount: 112}
+  3: {type: ITEM, material: COOKED_BEEF, count: 32, displayName: "Стейк ×32"}
+  4: {type: MONEY, amount: 3000}
+  5: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:xy_aluminum_dust 2", displayName: "Ксилюминиевая пыль ×2"}
+  6: {type: ITEM, material: COAL, count: 64, displayName: "Уголь ×64"}
+  7: {type: MONEY, amount: 3000}
+  8: {type: EXP, amount: 148}
+  9: {type: ITEM, material: IRON_INGOT, count: 32, displayName: "Железный слиток ×32"}
+  10: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:ruby_gem 2", displayName: "Рубин ×2"}
+  11: {type: EXP, amount: 166}
+  12: {type: ITEM, material: ARROW, count: 64, displayName: "Стрелы ×64"}
+  13: {type: MONEY, amount: 6000}
+  14: {type: EXP, amount: 184}
+  15: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:eclipse_alloy_plate 2", displayName: "Пластина сплава Затмения ×2"}
+  16: {type: MONEY, amount: 6000}
+  17: {type: EXP, amount: 202}
+  18: {type: ITEM, material: IRON_BLOCK, count: 4, displayName: "Железный блок ×4"}
+  19: {type: MONEY, amount: 6000}
+  20: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:eclipse_alloy_large_plate 2", displayName: "Большая пластина сплава Затмения ×2"}
+  21: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 16, displayName: "Бутыль опыта ×16"}
+  22: {type: MONEY, amount: 9000}
+  23: {type: EXP, amount: 238}
+  24: {type: ITEM, material: REDSTONE, count: 64, displayName: "Редстоун ×64"}
+  25: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:shriveling_mixture 2", displayName: "Иссушающая смесь ×2"}
+  26: {type: EXP, amount: 256}
+  27: {type: ITEM, material: GHAST_TEAR, count: 4, displayName: "Слеза гаста ×4"}
+  28: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:sludge_baby 2", displayName: "Слизевый малыш ×2"}
+  29: {type: EXP, amount: 274}
+  30: {type: ITEM, material: DIAMOND, count: 8, displayName: "Алмаз ×8"}
+  31: {type: MONEY, amount: 12000}
+  32: {type: EXP, amount: 292}
+  33: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:sewage_baby 2", displayName: "Сточный малыш ×2"}
+  34: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:skill_reset_magic 1", displayName: "Сигил сброса: Магия"}
+  35: {type: EXP, amount: 310}
+  36: {type: ITEM, material: ENDER_PEARL, count: 16, displayName: "Жемчуг Края ×16"}
+  37: {type: MONEY, amount: 12000}
+  38: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:white_star 2", displayName: "Белая звезда ×2"}
+  39: {type: ITEM, material: BLAZE_ROD, count: 16, displayName: "Огненный стержень ×16"}
+  40: {type: MONEY, amount: 12000}
+  41: {type: EXP, amount: 346}
+  42: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 32, displayName: "Бутыль опыта ×32"}
+  43: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:black_star 2", displayName: "Чёрная звезда ×2"}
+  44: {type: EXP, amount: 364}
+  45: {type: ITEM, material: REDSTONE_BLOCK, count: 16, displayName: "Блок редстоуна ×16"}
+  46: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:skill_reset_melee 1", displayName: "Сигил сброса: Ближний бой"}
+  47: {type: EXP, amount: 382}
+  48: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:supernova 2", displayName: "Сверхновая ×2"}
+  49: {type: MONEY, amount: 15000}
+  50: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:ender_apple 1", displayName: "Эндер-яблоко"}
+  51: {type: ITEM, material: EMERALD, count: 16, displayName: "Изумруд ×16"}
+  52: {type: MONEY, amount: 18000}
+  53: {type: EXP, amount: 418}
+  54: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:music_disc 1", displayName: "Пластинка: Block vs Block"}
+  55: {type: MONEY, amount: 18000}
+  56: {type: EXP, amount: 436}
+  57: {type: ITEM, material: PHANTOM_MEMBRANE, count: 16, displayName: "Мембрана фантома ×16"}
+  58: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:elemental_arcanite 1", displayName: "Стихийный арканит"}
+  59: {type: EXP, amount: 454}
+  60: {type: ITEM, material: DIAMOND_BLOCK, count: 2, displayName: "Алмазный блок ×2"}
+  61: {type: MONEY, amount: 21000}
+  62: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:primal_essence 1", displayName: "Первородная эссенция"}
+  63: {type: ITEM, material: NETHERITE_SCRAP, count: 2, displayName: "Обломки незерита ×2"}
+  64: {type: MONEY, amount: 21000}
+  65: {type: EXP, amount: 490}
+  66: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:evolutionary_matter 1", displayName: "Эволюционная материя"}
+  67: {type: MONEY, amount: 21000}
+  68: {type: EXP, amount: 508}
+  69: {type: ITEM, material: GHAST_TEAR, count: 8, displayName: "Слеза гаста ×8"}
+  70: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:bio_neural_circuit 1", displayName: "Био-нейронная схема"}
+  71: {type: EXP, amount: 526}
+  72: {type: ITEM, material: SHULKER_SHELL, count: 4, displayName: "Панцирь шалкера ×4"}
+  73: {type: MONEY, amount: 24000}
+  74: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:mekanized_super_computer 1", displayName: "Мех. суперкомпьютер"}
+  75: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 64, displayName: "Бутыль опыта ×64"}
+  76: {type: MONEY, amount: 24000}
+  77: {type: EXP, amount: 562}
+  78: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:ender_transmitter 1", displayName: "Эндер-передатчик"}
+  79: {type: MONEY, amount: 24000}
+  80: {type: EXP, amount: 580}
+  81: {type: ITEM, material: DIAMOND_BLOCK, count: 4, displayName: "Алмазный блок ×4"}
+  82: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:skill_reset_mining 1", displayName: "Сигил сброса: Добыча"}
+  83: {type: EXP, amount: 598}
+  84: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:prediction_amalgam 1", displayName: "Эволюционная амальгама"}
+  85: {type: MONEY, amount: 27000}
+  86: {type: EXP, amount: 616}
+  87: {type: ITEM, material: EXPERIENCE_BOTTLE, count: 96, displayName: "Бутыль опыта ×96"}
+  88: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:fortron_infused_large_plate 1", displayName: "Фортрон-пластина"}
+  89: {type: EXP, amount: 634}
+  90: {type: ITEM, material: ANCIENT_DEBRIS, count: 4, displayName: "Древние обломки ×4"}
+  91: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:genetic_substrate 1", displayName: "Генетический субстрат"}
+  92: {type: EXP, amount: 652}
+  93: {type: ITEM, material: TOTEM_OF_UNDYING, count: 2, displayName: "Тотем бессмертия ×2"}
+  94: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:skill_reset_defense 1", displayName: "Сигил сброса: Защита"}
+  95: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:ultimate_singularity 1", displayName: "Абсолютная сингулярность"}
+  96: {type: ITEM, material: NETHERITE_INGOT, count: 4, displayName: "Незеритовый слиток ×4"}
+  97: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:sands_of_time 1", displayName: "Пески времени"}
+  98: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:evolutionary_arcanum 1", displayName: "Эволюционный арканум"}
+  99: {type: ITEM, material: ENCHANTED_GOLDEN_APPLE, count: 2, displayName: "Зачарованное золотое яблоко ×2"}
+  100: {type: COMMAND, command: "/minecraft:give {player} ftbevolution:realized_transcendence 1", displayName: "Воплощённое трансцендентство"}

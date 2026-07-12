@@ -61,6 +61,10 @@ public final class BpProgressListener implements Listener {
     private Plugin plugin;
     private BackendSyncClient backendClient;
 
+    // Per-player daily "grind" XP tracker: uuid -> {epochDay, earnedToday}.
+    // NOT evicted on quit so relogging can't reset the cap; persists within the same day.
+    private final java.util.Map<UUID, long[]> grindXpToday = new java.util.concurrent.ConcurrentHashMap<>();
+
     public BpProgressListener(BattlePassStorage storage, PremiumStorage premiumStorage,
                                BpQuestStorage questStorage, SeasonRewards seasonRewards,
                                Economy economy) {
@@ -103,17 +107,17 @@ public final class BpProgressListener implements Listener {
         Entity entity = event.getEntity();
         String entityKey = entity.getType().getKey().toString();
 
-        // XP for kills
+        // XP for kills (subject to the daily grind cap)
         long xpGain;
         if (VANILLA_BOSSES.contains(entityKey)) {
             xpGain = 500;
         } else if (MODDED_BOSSES.contains(entityKey)) {
             xpGain = 150;
         } else {
-            xpGain = 10;
+            xpGain = 3;
         }
 
-        addXpAndNotify(killer, xpGain);
+        addGrindXp(killer, xpGain);
 
         // Quest progress: KILL quests
         tickQuestProgress(killer, BpQuestType.KILL, entityKey, 1);
@@ -160,12 +164,13 @@ public final class BpProgressListener implements Listener {
         Player player = Bukkit.getPlayerExact(e.getPlayerName());
         if (player == null || !player.isOnline()) return;
 
-        // XP based on trade value: 1 XP per 200 coins, min 500 coins to award anything, cap 500 XP
+        // XP based on trade value: 1 XP per 300 coins, min 500 coins to award anything, cap 150 XP/trade
+        // (subject to the daily grind cap)
         double gross = e.getGrossTotal();
         if (gross < 500.0) return;
-        long xp = Math.min(500L, (long) (gross / 200.0));
+        long xp = Math.min(150L, (long) (gross / 300.0));
         if (xp <= 0) return;
-        addXpAndNotify(player, xp);
+        addGrindXp(player, xp);
 
         // Quest progress
         BpQuestType type = e.getRole() == PlayerMarketTradeEvent.Role.SELLER
@@ -181,10 +186,33 @@ public final class BpProgressListener implements Listener {
         Advancement adv = event.getAdvancement();
         // Skip recipe unlocks
         if (adv.getKey().getKey().startsWith("recipes/")) return;
-        addXpAndNotify(event.getPlayer(), 150);
+        addGrindXp(event.getPlayer(), 100);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
+
+    /**
+     * Grants "grind" XP (mob kills, market trades, advancements) subject to a per-player
+     * daily cap ({@code daily-xp-cap} in config.yml, default 8000; 0 disables the cap).
+     * Quest and daily-quest-plugin XP bypass this cap since they are naturally limited.
+     */
+    private void addGrindXp(Player player, long amount) {
+        if (amount <= 0) return;
+        long cap = plugin != null ? plugin.getConfig().getLong("daily-xp-cap", 8000L) : 8000L;
+        if (cap > 0) {
+            long today = java.time.LocalDate.now().toEpochDay();
+            long[] rec = grindXpToday.get(player.getUniqueId());
+            if (rec == null || rec[0] != today) {
+                rec = new long[]{today, 0L};
+                grindXpToday.put(player.getUniqueId(), rec);
+            }
+            long remaining = cap - rec[1];
+            if (remaining <= 0) return;
+            if (amount > remaining) amount = remaining;
+            rec[1] += amount;
+        }
+        addXpAndNotify(player, amount);
+    }
 
     private void addXpAndNotify(Player player, long amount) {
         UUID uuid = player.getUniqueId();
@@ -199,7 +227,7 @@ public final class BpProgressListener implements Listener {
                         () -> {
                             if (!player.isOnline()) return;
                             player.sendMessage("§6§l✦ §eБаттл Пасс: Уровень " + displayLvl + "! §6/bp для наград");
-                            if (displayLvl >= 1000) {
+                            if (displayLvl >= BattlePassData.MAX_LEVEL) {
                                 player.sendTitle("§6§l✦ УРОВЕНЬ МАКСИМУМ!", "§eBattle Pass — все награды доступны!", 10, 80, 20);
                             } else {
                                 player.sendTitle("§6§l✦ Уровень " + displayLvl + "!", "§eBattle Pass — §7/bp для наград", 10, 60, 20);

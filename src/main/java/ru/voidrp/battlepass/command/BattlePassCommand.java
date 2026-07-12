@@ -102,8 +102,8 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
         }
         sender.sendMessage("§6§l✦ Battle Pass — §e" + name);
         sender.sendMessage("§7Сезон: §e" + Season.currentKey());
-        sender.sendMessage("§7Уровень: §e" + level + "§7/1000");
-        sender.sendMessage("§7XP: §e" + xp + (level < 1000 ? " §7(до сл. уровня: §e" + toNext + "§7)" : ""));
+        sender.sendMessage("§7Уровень: §e" + level + "§7/" + BattlePassData.MAX_LEVEL);
+        sender.sendMessage("§7XP: §e" + xp + (level < BattlePassData.MAX_LEVEL ? " §7(до сл. уровня: §e" + toNext + "§7)" : ""));
         sender.sendMessage("§7Premium: " + premiumStatus);
     }
 
@@ -264,7 +264,7 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
         }
         storage.setLevel(targetUuid, level);
         storage.save(targetUuid);
-        int clamped = Math.max(1, Math.min(1000, level));
+        int clamped = Math.max(1, Math.min(BattlePassData.MAX_LEVEL, level));
         sender.sendMessage("§aУровень игрока §e" + targetName + " §aустановлен на §e" + clamped + "§a.");
         if (target != null) target.sendMessage("§6§l✦ §eВаш уровень Battle Pass установлен на §e" + clamped + "§6!");
     }
@@ -335,7 +335,7 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
                 case "level" -> {
                     if (args.length == 2) yield filter(List.of("set"), args[1]);
                     if (args.length == 3) yield onlinePlayers(args[2]);
-                    if (args.length == 4) yield filter(List.of("1","100","200","300","400","500","600","700","800","900","1000"), args[3]);
+                    if (args.length == 4) yield filter(List.of("1","10","20","30","40","50","60","70","80","90","100"), args[3]);
                     yield List.of();
                 }
                 case "info" -> {
