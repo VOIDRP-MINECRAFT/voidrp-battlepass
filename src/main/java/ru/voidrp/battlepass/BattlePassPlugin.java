@@ -211,7 +211,7 @@ public final class BattlePassPlugin extends JavaPlugin {
                         backendClient.pushNotification(nick, "battlepass",
                                 "Battle Pass — уровень " + lvl + "!",
                                 "Открыты новые награды сезона. Забери их во вкладке Battle Pass.",
-                                "battlepass", "gold", "command", "battlepass", "Забрать"));
+                                "battlepass", "gold", "route", "battlepass", "Открыть Battle Pass"));
             }
         }
     }
