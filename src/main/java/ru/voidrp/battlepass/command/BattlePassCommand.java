@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import ru.voidrp.battlepass.data.BackendSyncClient;
 import ru.voidrp.battlepass.data.BattlePassData;
+import ru.voidrp.battlepass.season.BpReward;
 import ru.voidrp.battlepass.data.BattlePassStorage;
 import ru.voidrp.battlepass.data.PremiumStorage;
 import ru.voidrp.battlepass.gui.BattlePassGui;
@@ -33,9 +34,17 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
     private final SeasonRewards seasonRewards;
     private BackendSyncClient backendClient;
     private Plugin plugin;
+    private ru.voidrp.battlepass.listener.BpProgressListener progressListener;
 
     public void setBackendClient(BackendSyncClient client) { this.backendClient = client; }
     public void setPlugin(Plugin plugin) { this.plugin = plugin; }
+    public void setProgressListener(ru.voidrp.battlepass.listener.BpProgressListener l) { this.progressListener = l; }
+
+    private void pushTrack(Player player) {
+        if (plugin instanceof org.bukkit.plugin.java.JavaPlugin jp) {
+            ru.voidrp.battlepass.data.BpTrackSync.push(jp, storage, premiumStorage, seasonRewards, backendClient, player);
+        }
+    }
 
     public BattlePassCommand(BattlePassGui battlePassGui, BpQuestGui questGui,
                               BattlePassStorage storage, PremiumStorage premiumStorage,
@@ -68,6 +77,7 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
+            pushTrack(player); // refresh WebGUI track snapshot before opening
             if (!tryOpenWebGui(player)) {
                 battlePassGui.open(player);
             }
@@ -77,11 +87,35 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
         switch (args[0].toLowerCase()) {
             case "quests" -> questGui.open(player);
             case "info" -> sendBpInfo(player, player.getUniqueId(), player.getName());
+            case "claim" -> handleClaim(player, args);
             default -> {
                 player.sendMessage("§cИспользование: /bp [quests|info]");
             }
         }
         return true;
+    }
+
+    /** /bp claim <free|premium> <level> — used by the WebGUI reward track. */
+    private void handleClaim(Player player, String[] args) {
+        if (args.length < 3) { player.sendMessage("§c/bp claim <free|premium> <уровень>"); return; }
+        boolean premiumTrack = args[1].equalsIgnoreCase("premium");
+        int level;
+        try { level = Integer.parseInt(args[2]); } catch (NumberFormatException e) { player.sendMessage("§cНеверный уровень."); return; }
+
+        UUID uuid = player.getUniqueId();
+        BattlePassData data = storage.get(uuid);
+        BpReward reward = premiumTrack ? seasonRewards.getPremiumReward(level) : seasonRewards.getFreeReward(level);
+        if (reward == null) { player.sendMessage("§c✦ Нет награды для этого уровня."); return; }
+        if (data.getLevel() < level) { player.sendMessage("§c✦ Нужен уровень " + level + "."); return; }
+        if (premiumTrack && !premiumStorage.hasPremium(uuid)) { player.sendMessage("§c✦ Требуется Premium."); return; }
+        if (premiumTrack ? data.isPremiumClaimed(level) : data.isFreeClaimed(level)) {
+            player.sendMessage("§c✦ Награда уже получена."); return;
+        }
+        if (premiumTrack) data.claimPremium(level); else data.claimFree(level);
+        storage.save(uuid);
+        if (progressListener != null) progressListener.giveReward(player, reward);
+        player.sendMessage("§a§l✦ §aНаграда получена!");
+        pushTrack(player);
     }
 
     private void sendBpInfo(CommandSender sender, UUID uuid, String name) {

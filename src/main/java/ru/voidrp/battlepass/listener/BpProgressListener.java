@@ -216,6 +216,7 @@ public final class BpProgressListener implements Listener {
 
     private void addXpAndNotify(Player player, long amount) {
         UUID uuid = player.getUniqueId();
+        amount = ru.voidrp.battlepass.NationResearchBonus.apply(player, amount);
         int oldLevel = storage.addXp(uuid, amount);
         BattlePassData data = storage.get(uuid);
         int newLevel = data.getLevel();

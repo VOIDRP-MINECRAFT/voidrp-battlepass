@@ -31,6 +31,7 @@ public final class BattlePassPlugin extends JavaPlugin {
     private BpQuestStorage questStorage;
     private SeasonRewards seasonRewards;
     private Economy economy;
+    private BackendSyncClient backendClient;
 
     private String lastKnownSeason;
 
@@ -87,6 +88,7 @@ public final class BattlePassPlugin extends JavaPlugin {
             getLogger().info("[BattlePass] Backend sync disabled (game-auth-secret not set).");
         }
         final BackendSyncClient finalBackendClient = backendClient;
+        this.backendClient = backendClient;
 
         // ── Vault ─────────────────────────────────────────────────────────────
         economy = setupEconomy();
@@ -117,6 +119,7 @@ public final class BattlePassPlugin extends JavaPlugin {
         BattlePassCommand cmd = new BattlePassCommand(battlePassGui, questGui, storage, premiumStorage, seasonRewards);
         cmd.setPlugin(this);
         cmd.setBackendClient(finalBackendClient);
+        cmd.setProgressListener(progressListener);
         attachProxy("battlepass", cmd);
         attachProxy("bp", cmd);
         attachProxy("баттлпасс", cmd);
@@ -134,13 +137,14 @@ public final class BattlePassPlugin extends JavaPlugin {
 
         // ── Periodic backend sync (every 10 min) ──────────────────────────────
         if (finalBackendClient != null) {
-            long periodTicks = 20L * 60 * 10; // 10 minutes
+            long periodTicks = 20L * 60 * 3; // 3 minutes
             getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
                 for (org.bukkit.entity.Player p : getServer().getOnlinePlayers()) {
                     ru.voidrp.battlepass.data.BattlePassData d = storage.get(p.getUniqueId());
                     finalBackendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), d.getLevel(), d.getXp());
+                    ru.voidrp.battlepass.data.BpTrackSync.push(this, storage, premiumStorage, seasonRewards, finalBackendClient, p);
                 }
-            }, periodTicks, periodTicks);
+            }, 400L, periodTicks);
         }
 
         // ── Hooks for voidrp_daily_quests ─────────────────────────────────────
@@ -190,6 +194,7 @@ public final class BattlePassPlugin extends JavaPlugin {
 
     private void addXpSafe(Player player, long amount) {
         if (!player.isOnline()) return;
+        amount = NationResearchBonus.apply(player, amount);
         int oldLevel = storage.addXp(player.getUniqueId(), amount);
         int newLevel = storage.get(player.getUniqueId()).getLevel();
         if (newLevel > oldLevel) {
@@ -197,6 +202,16 @@ public final class BattlePassPlugin extends JavaPlugin {
                 final int displayLvl = lvl;
                 Bukkit.getScheduler().runTask(this,
                         () -> player.sendMessage("§6§l✦ §eБаттл Пасс: Уровень " + displayLvl + "! §6/bp для наград"));
+            }
+            // Reactive in-game notification (HUD toast) — fired off the main thread.
+            if (backendClient != null && backendClient.isConfigured()) {
+                final int lvl = newLevel;
+                final String nick = player.getName();
+                Bukkit.getScheduler().runTaskAsynchronously(this, () ->
+                        backendClient.pushNotification(nick, "battlepass",
+                                "Battle Pass — уровень " + lvl + "!",
+                                "Открыты новые награды сезона. Забери их во вкладке Battle Pass.",
+                                "battlepass", "gold", "command", "battlepass", "Забрать"));
             }
         }
     }

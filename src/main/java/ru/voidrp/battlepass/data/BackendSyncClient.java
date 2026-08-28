@@ -154,6 +154,57 @@ public final class BackendSyncClient {
         }
     }
 
+    /** Pushes a full reward-track snapshot JSON (built by BpTrackSync) for the WebGUI. */
+    public void pushTrack(String jsonBody) {
+        try {
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/battlepass/track"))
+                    .header("Content-Type",       "application/json")
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody)))
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() != 200 && resp.statusCode() != 204) {
+                log.warning("[BattlePass] Backend track push failed (" + resp.statusCode() + ")");
+            }
+        } catch (Exception e) {
+            log.warning("[BattlePass] Backend track push error: " + e.getMessage());
+        }
+    }
+
+    /** Push a reactive in-game notification to a player (shown in the HUD overlay). Blocking. */
+    public void pushNotification(String nickname, String type, String title, String body,
+                                 String icon, String accent,
+                                 String actionType, String actionPayload, String actionLabel) {
+        try {
+            JsonObject o = new JsonObject();
+            o.addProperty("minecraft_nickname", nickname);
+            o.addProperty("type", type);
+            o.addProperty("title", title);
+            if (body != null) o.addProperty("body", body);
+            if (icon != null) o.addProperty("icon", icon);
+            if (accent != null) o.addProperty("accent", accent);
+            if (actionType != null) o.addProperty("action_type", actionType);
+            if (actionPayload != null) o.addProperty("action_payload", actionPayload);
+            if (actionLabel != null) o.addProperty("action_label", actionLabel);
+
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/notifications"))
+                    .header("Content-Type",       "application/json")
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .POST(HttpRequest.BodyPublishers.ofString(o.toString())))
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() != 201 && resp.statusCode() != 200 && resp.statusCode() != 404) {
+                log.warning("[BattlePass] Notification push failed (" + resp.statusCode() + ") for " + nickname);
+            }
+        } catch (Exception e) {
+            log.warning("[BattlePass] Notification push error (" + nickname + "): " + e.getMessage());
+        }
+    }
+
     public boolean isConfigured() {
         return gameAuthSecret != null && !gameAuthSecret.isBlank();
     }
