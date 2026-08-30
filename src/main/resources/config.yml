@@ -1,11 +1,11 @@
 reset-hour: 0
 
-season-name: "Сезон 2 - Эволюция"
+season-name: "Осенний сезон 2026"
 
 # Даты сезона в формате yyyy-MM-dd
 # Ключ хранилища данных привязан к season-start — при смене дат старые данные сохраняются отдельно (= сброс)
-season-start: "2026-07-12"
-season-end: "2026-10-12"
+season-start: "2026-08-31"
+season-end: "2026-11-29"
 
 # Дневной лимит "гриндового" XP (мобы, сделки, достижения) на игрока.
 # Квесты БП и дейлики его НЕ расходуют. 0 = без лимита.
@@ -23,5 +23,5 @@ server-slug: ""
 
 # WebGUI integration — открывать /bp через браузер в игре
 webgui:
-  enabled: false
+  enabled: true
   battlepass-url: "https://void-rp.ru/game-ui/battlepass"

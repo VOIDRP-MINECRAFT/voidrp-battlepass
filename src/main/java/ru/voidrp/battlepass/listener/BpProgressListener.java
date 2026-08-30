@@ -304,6 +304,12 @@ public final class BpProgressListener implements Listener {
                 player.giveExp((int) reward.getAmount());
                 player.sendMessage("§a✨ Получено §e" + (int) reward.getAmount() + " опыта§a!");
             }
+            case VOIDCOIN -> {
+                long vc = (long) reward.getAmount();
+                // granted via the game-sync admin command (runs as console → has permission)
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "vrgs voidcoin " + player.getName() + " " + vc);
+                player.sendMessage("§5◆ Получено §d" + vc + " Void Coin§5!");
+            }
             case ITEM -> {
                 org.bukkit.Material mat;
                 try {

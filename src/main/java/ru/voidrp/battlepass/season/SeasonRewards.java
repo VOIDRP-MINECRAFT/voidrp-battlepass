@@ -58,6 +58,7 @@ public final class SeasonRewards {
             BpReward reward = switch (type) {
                 case MONEY -> new BpReward(BpRewardType.MONEY, cfg.getDouble(path + ".amount", 0));
                 case EXP -> new BpReward(BpRewardType.EXP, cfg.getDouble(path + ".amount", 0));
+                case VOIDCOIN -> new BpReward(BpRewardType.VOIDCOIN, cfg.getDouble(path + ".amount", 0));
                 case ITEM -> {
                     String mat = cfg.getString(path + ".material", "PAPER");
                     int count = cfg.getInt(path + ".count", 1);

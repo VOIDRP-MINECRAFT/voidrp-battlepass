@@ -296,6 +296,7 @@ public final class BattlePassGui {
             case ITEM -> lore.add("§b📦 " + reward.getDisplayName()
                     + (reward.getCount() > 1 ? "" : ""));
             case COMMAND -> lore.add("§d🎁 " + (reward.getDisplayName() != null ? reward.getDisplayName() : "Особая награда"));
+            case VOIDCOIN -> lore.add("§5◆ " + (long) reward.getAmount() + " Void Coin §7(премиум-валюта)");
         }
         if (claimed) lore.add("§a§lПолучено!");
         return lore;
@@ -316,6 +317,7 @@ public final class BattlePassGui {
                 yield Material.BOOK;
             }
             case COMMAND -> Material.CHEST;
+            case VOIDCOIN -> Material.AMETHYST_SHARD;
         };
     }
 

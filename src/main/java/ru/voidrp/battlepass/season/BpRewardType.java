@@ -4,5 +4,6 @@ public enum BpRewardType {
     MONEY,
     EXP,
     ITEM,
-    COMMAND
+    COMMAND,
+    VOIDCOIN
 }
