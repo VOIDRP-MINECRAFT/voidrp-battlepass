@@ -64,6 +64,9 @@ public final class BpProgressListener implements Listener {
     // Per-player daily "grind" XP tracker: uuid -> {epochDay, earnedToday}.
     // NOT evicted on quit so relogging can't reset the cap; persists within the same day.
     private final java.util.Map<UUID, long[]> grindXpToday = new java.util.concurrent.ConcurrentHashMap<>();
+    // Suppress grind XP briefly after a reward claim: claimed items trigger advancements/pickups,
+    // which would otherwise level up the pass — the exact circular XP the season removed.
+    private final java.util.Map<UUID, Long> claimSuppressUntil = new java.util.concurrent.ConcurrentHashMap<>();
 
     public BpProgressListener(BattlePassStorage storage, PremiumStorage premiumStorage,
                                BpQuestStorage questStorage, SeasonRewards seasonRewards,
@@ -232,6 +235,8 @@ public final class BpProgressListener implements Listener {
 
     private void addGrindXp(Player player, long amount) {
         if (amount <= 0) return;
+        // Skip XP from items/advancements triggered by a just-claimed reward.
+        if (System.currentTimeMillis() < claimSuppressUntil.getOrDefault(player.getUniqueId(), 0L)) return;
         double mult = xpMultiplier();
         amount = Math.round(amount * mult);
         long cap = plugin != null ? plugin.getConfig().getLong("daily-xp-cap", 8000L) : 8000L;
@@ -332,6 +337,8 @@ public final class BpProgressListener implements Listener {
 
     /** Called externally when a level reward is claimed to give the item/money/exp. */
     public void giveReward(Player player, BpReward reward) {
+        // Don't let items granted by this claim award grind XP (advancements/pickups) and level the pass.
+        claimSuppressUntil.put(player.getUniqueId(), System.currentTimeMillis() + 4000L);
         switch (reward.getType()) {
             case MONEY -> {
                 if (economy != null) {
