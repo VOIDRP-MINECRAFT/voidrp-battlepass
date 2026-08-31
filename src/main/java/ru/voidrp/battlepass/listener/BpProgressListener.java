@@ -227,17 +227,33 @@ public final class BpProgressListener implements Listener {
      * daily cap ({@code daily-xp-cap} in config.yml, default 8000; 0 disables the cap).
      * Quest and daily-quest-plugin XP bypass this cap since they are naturally limited.
      */
-    /** x2 Battle Pass XP on weekends (Sat/Sun). */
+    /** Days before season end that count as the "finale" (x2 XP hype window). */
+    public static final int FINALE_DAYS = 7;
+    private static final double FINALE_MULT = 2.0;
+
+    /** Global Battle Pass XP multiplier: x2 on weekends, x2 during the season finale (stacks). */
     public static double xpMultiplier() {
+        double m = 1.0;
         java.time.DayOfWeek d = java.time.LocalDate.now().getDayOfWeek();
-        return (d == java.time.DayOfWeek.SATURDAY || d == java.time.DayOfWeek.SUNDAY) ? 2.0 : 1.0;
+        if (d == java.time.DayOfWeek.SATURDAY || d == java.time.DayOfWeek.SUNDAY) m *= 2.0;
+        if (ru.voidrp.battlepass.season.Season.isActive()
+                && ru.voidrp.battlepass.season.Season.daysUntilReset() <= FINALE_DAYS) {
+            m *= FINALE_MULT;   // last week of the season — final push
+        }
+        return m;
+    }
+
+    /** True while the season is in its final-week finale. */
+    public static boolean isFinale() {
+        return ru.voidrp.battlepass.season.Season.isActive()
+                && ru.voidrp.battlepass.season.Season.daysUntilReset() <= FINALE_DAYS;
     }
 
     private void addGrindXp(Player player, long amount) {
         if (amount <= 0) return;
         // Skip XP from items/advancements triggered by a just-claimed reward.
         if (System.currentTimeMillis() < claimSuppressUntil.getOrDefault(player.getUniqueId(), 0L)) return;
-        double mult = xpMultiplier();
+        double mult = xpMultiplier() * catchUpMultiplier(player);
         amount = Math.round(amount * mult);
         long cap = plugin != null ? plugin.getConfig().getLong("daily-xp-cap", 8000L) : 8000L;
         if (cap > 0) cap = Math.round(cap * mult);   // weekend also raises the cap so 2x actually lands
@@ -254,6 +270,27 @@ public final class BpProgressListener implements Listener {
             rec[1] += amount;
         }
         addXpAndNotify(player, amount);
+    }
+
+    /**
+     * Catch-up boost for players behind the season pace: the further below the expected
+     * level (season fraction × MAX_LEVEL) they are, the bigger the grind-XP multiplier
+     * (up to 2x). Keeps late joiners from giving up. Returns 1.0 when on pace or unknown.
+     */
+    private double catchUpMultiplier(Player player) {
+        java.time.LocalDate start = ru.voidrp.battlepass.season.Season.getStartDate();
+        java.time.LocalDate end = ru.voidrp.battlepass.season.Season.getEndDate();
+        if (start == null || end == null || !ru.voidrp.battlepass.season.Season.isActive()) return 1.0;
+        long total = java.time.temporal.ChronoUnit.DAYS.between(start, end);
+        if (total <= 0) return 1.0;
+        long elapsed = java.time.temporal.ChronoUnit.DAYS.between(start, java.time.LocalDate.now());
+        double frac = Math.max(0.0, Math.min(1.0, elapsed / (double) total));
+        int expected = (int) Math.round(frac * BattlePassData.MAX_LEVEL);
+        if (expected <= 1) return 1.0;
+        int actual = storage.get(player.getUniqueId()).getLevel();
+        if (actual >= expected * 0.7) return 1.0;   // within pace — no boost
+        double behind = (expected - actual) / (double) expected;   // 0..1
+        return Math.min(2.0, 1.0 + behind);
     }
 
     private void addXpAndNotify(Player player, long amount) {
@@ -282,9 +319,10 @@ public final class BpProgressListener implements Listener {
             if (backendClient != null && backendClient.isConfigured() && plugin != null) {
                 final int finalLevel = newLevel;
                 final long finalXp = data.getXp();
+                final int finalPrestige = data.getPrestige();
                 final String nick = player.getName();
                 Bukkit.getScheduler().runTaskAsynchronously(plugin,
-                        () -> backendClient.pushProgress(uuid.toString(), nick, ru.voidrp.battlepass.season.Season.currentKey(), finalLevel, finalXp));
+                        () -> backendClient.pushProgress(uuid.toString(), nick, ru.voidrp.battlepass.season.Season.currentKey(), finalLevel, finalXp, finalPrestige));
             }
         }
         // Prestige (past level 100) — checked on every gain, not just on a visible level-up.
@@ -296,7 +334,7 @@ public final class BpProgressListener implements Listener {
         BattlePassData data = storage.get(uuid);
         org.bukkit.OfflinePlayer op = Bukkit.getOfflinePlayer(uuid);
         String nick = op.getName() != null ? op.getName() : uuid.toString();
-        backendClient.pushProgress(uuid.toString(), nick, ru.voidrp.battlepass.season.Season.currentKey(), data.getLevel(), data.getXp());
+        backendClient.pushProgress(uuid.toString(), nick, ru.voidrp.battlepass.season.Season.currentKey(), data.getLevel(), data.getXp(), data.getPrestige());
     }
 
     private void tickQuestProgress(Player player, BpQuestType type, String key, int amount) {
@@ -323,6 +361,9 @@ public final class BpProgressListener implements Listener {
                 addXpAndNotify(player, xpReward);
                 player.sendMessage("§b⭐ §aBP квест выполнен: §f" + quest.getDisplayName()
                         + " §b+" + xpReward + " XP");
+                if (backendClient != null && backendClient.isConfigured() && plugin != null) {
+                    ru.voidrp.battlepass.data.BpQuestSync.push(plugin, questStorage, premiumStorage, backendClient, player);
+                }
             }
         }
     }

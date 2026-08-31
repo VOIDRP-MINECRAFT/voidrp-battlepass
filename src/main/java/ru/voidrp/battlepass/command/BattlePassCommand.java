@@ -434,7 +434,7 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
             String nick = offline.getName() != null ? offline.getName() : name;
             BattlePassData data = storage.get(uuid);
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                backendClient.pushProgress(uuid.toString(), nick, Season.currentKey(), data.getLevel(), data.getXp());
+                backendClient.pushProgress(uuid.toString(), nick, Season.currentKey(), data.getLevel(), data.getXp(), data.getPrestige());
                 Bukkit.getScheduler().runTask(plugin, () ->
                     sender.sendMessage("§aСинк отправлен: §e" + nick + " §7— уровень §e" + data.getLevel() + " §7(§e" + data.getXp() + " XP§7)")
                 );
@@ -451,7 +451,7 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
                 int count = 0;
                 for (Player p : online) {
                     BattlePassData data = storage.get(p.getUniqueId());
-                    backendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), data.getLevel(), data.getXp());
+                    backendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), data.getLevel(), data.getXp(), data.getPrestige());
                     count++;
                 }
                 final int total = count;

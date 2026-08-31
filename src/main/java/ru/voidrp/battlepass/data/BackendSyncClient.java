@@ -129,7 +129,7 @@ public final class BackendSyncClient {
     /**
      * Push player's current BP progress (level/xp/season) to the backend for profile display.
      */
-    public void pushProgress(String minecraftUuid, String minecraftNickname, String season, int level, long xp) {
+    public void pushProgress(String minecraftUuid, String minecraftNickname, String season, int level, long xp, int prestige) {
         try {
             JsonObject body = new JsonObject();
             body.addProperty("minecraft_uuid", minecraftUuid);
@@ -137,6 +137,7 @@ public final class BackendSyncClient {
             body.addProperty("season", season);
             body.addProperty("level", level);
             body.addProperty("xp", xp);
+            body.addProperty("prestige", prestige);
 
             HttpRequest req = withSlug(HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + "/api/v1/battlepass/progress"))
@@ -170,6 +171,25 @@ public final class BackendSyncClient {
             }
         } catch (Exception e) {
             log.warning("[BattlePass] Backend track push error: " + e.getMessage());
+        }
+    }
+
+    /** Pushes today's quest snapshot JSON (built by BpQuestSync) for the WebGUI. */
+    public void pushQuests(String jsonBody) {
+        try {
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/battlepass/quests"))
+                    .header("Content-Type",       "application/json")
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody)))
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() != 200 && resp.statusCode() != 204) {
+                log.warning("[BattlePass] Backend quests push failed (" + resp.statusCode() + ")");
+            }
+        } catch (Exception e) {
+            log.warning("[BattlePass] Backend quests push error: " + e.getMessage());
         }
     }
 

@@ -141,8 +141,9 @@ public final class BattlePassPlugin extends JavaPlugin {
             getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
                 for (org.bukkit.entity.Player p : getServer().getOnlinePlayers()) {
                     ru.voidrp.battlepass.data.BattlePassData d = storage.get(p.getUniqueId());
-                    finalBackendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), d.getLevel(), d.getXp());
+                    finalBackendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), d.getLevel(), d.getXp(), d.getPrestige());
                     ru.voidrp.battlepass.data.BpTrackSync.push(this, storage, premiumStorage, seasonRewards, finalBackendClient, p);
+                    ru.voidrp.battlepass.data.BpQuestSync.push(this, questStorage, premiumStorage, finalBackendClient, p);
                 }
             }, 400L, periodTicks);
         }
