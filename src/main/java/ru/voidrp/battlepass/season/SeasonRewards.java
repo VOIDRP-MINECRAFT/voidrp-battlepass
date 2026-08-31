@@ -68,7 +68,13 @@ public final class SeasonRewards {
                 case COMMAND -> {
                     String cmd = cfg.getString(path + ".command", "");
                     String name = cfg.getString(path + ".displayName", "Награда");
-                    yield new BpReward(cmd, name);
+                    String icon = cfg.getString(path + ".icon", null);
+                    if (icon == null) {
+                        for (String tok : cmd.split(" ")) {   // fall back to the give id in the command
+                            if (tok.contains(":") && !tok.startsWith("minecraft:give") && !tok.startsWith("/minecraft:give")) { icon = tok; break; }
+                        }
+                    }
+                    yield new BpReward(cmd, name, icon);
                 }
             };
             map.put(level, reward);

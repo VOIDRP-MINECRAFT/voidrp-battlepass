@@ -47,7 +47,9 @@ public final class BpTrackSync {
 
         JsonObject body = new JsonObject();
         body.addProperty("minecraft_nickname", player.getName());
-        body.addProperty("season", data.getSeason());
+        // Show the human season name in the WebGUI (data.getSeason() is the storage key = start date).
+        String seasonName = plugin.getConfig().getString("season-name", data.getSeason());
+        body.addProperty("season", seasonName);
         body.addProperty("level", data.getLevel());
         body.addProperty("xp", data.getXp());
         body.addProperty("xp_per_level", (int) BattlePassData.XP_PER_LEVEL);
@@ -66,6 +68,7 @@ public final class BpTrackSync {
         o.addProperty("amount", r.getAmount());
         o.addProperty("material", r.getMaterial());
         o.addProperty("count", r.getCount());
+        o.addProperty("icon", r.getIcon());
         return o;
     }
 }

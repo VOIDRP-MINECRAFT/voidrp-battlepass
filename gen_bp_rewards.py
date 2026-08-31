@@ -1,116 +1,135 @@
 #!/usr/bin/env python3
 """Generate rewards.yml for the Battle Pass season (100 levels, free + premium).
 
-Rules for the Autumn 2026 season:
-- NO EXP rewards (XP raises the BP level itself → pointless as a reward).
-- Free track: money + vanilla items + occasional modded (COMMAND) items, scaling with level.
-- Premium track: better money/items + Void Coin on every 10th ("significant") level, 100 → up.
-Modded ids are the validated ftbevolution ones already used in the pack.
+Autumn 2026 season, tech-modpack flavour:
+- Rewards are mostly MODDED items (pulled from the validated Void-Upgrader pool: installed
+  mods, real ids, Russian names, with icons) delivered via COMMAND give with an `icon:` so
+  the WebGUI shows the texture. Vanilla only fills a few early basics + money.
+- Progression by tier: early = common/rare, mid = rare/epic, late = epic/legendary. High
+  levels (80-100) give genuinely valuable endgame items (no "64 obsidian at level 99").
+- NO EXP rewards. Void Coin: free track at 10 & 50; premium every 10th level (100 → 1000).
 
-Run:  python3 gen_bp_rewards.py  (writes src/main/resources/rewards.yml)
+Run with the backend venv:  minecraft_backend/.venv/bin/python voidrp_battlepass/gen_bp_rewards.py
 """
+import random
+import sys
 from pathlib import Path
+
+BACKEND = Path(__file__).resolve().parent.parent / "minecraft_backend"
+sys.path.insert(0, str(BACKEND))
+
+from sqlalchemy import select  # noqa: E402
+
+from apps.api.app.db import SessionLocal  # noqa: E402
+from apps.api.app.models.game_server import GameServer  # noqa: E402
+from apps.api.app.models.void_upgrader import VoidUpgraderReward  # noqa: E402
 
 OUT = Path(__file__).resolve().parent / "src" / "main" / "resources" / "rewards.yml"
 
-# Void Coin milestones on premium (every 10th level), starting at 100 and climbing.
-VOIDCOIN = {10: 100, 20: 120, 30: 140, 40: 160, 50: 200, 60: 240, 70: 280, 80: 320, 90: 400, 100: 1000}
+VOIDCOIN_PREM = {10: 100, 20: 120, 30: 140, 40: 160, 50: 200, 60: 240, 70: 280, 80: 320, 90: 400, 100: 1000}
+VOIDCOIN_FREE = {10: 30, 50: 60}   # a taste of the premium currency on the free track
 
-# vanilla item pools by tier: (MATERIAL, count, ru_name)
-LOW_ITEMS = [
-    ("COOKED_BEEF", 16, "Стейк ×16"), ("BREAD", 32, "Хлеб ×32"), ("COAL", 32, "Уголь ×32"),
-    ("IRON_INGOT", 16, "Железный слиток ×16"), ("ARROW", 64, "Стрелы ×64"), ("TORCH", 48, "Факелы ×48"),
-    ("STRING", 16, "Нить ×16"), ("REDSTONE", 32, "Редстоун ×32"), ("GOLD_INGOT", 8, "Золотой слиток ×8"),
-    ("LEATHER", 16, "Кожа ×16"), ("SLIME_BALL", 8, "Слизь ×8"), ("GLOWSTONE", 16, "Светокамень ×16"),
-    ("OAK_LOG", 32, "Дубовые брёвна ×32"), ("GUNPOWDER", 16, "Порох ×16"),
-]
-MID_ITEMS = [
-    ("DIAMOND", 4, "Алмаз ×4"), ("EMERALD", 8, "Изумруд ×8"), ("IRON_BLOCK", 3, "Железный блок ×3"),
-    ("GOLD_BLOCK", 2, "Золотой блок ×2"), ("ENDER_PEARL", 8, "Жемчуг Края ×8"), ("BLAZE_ROD", 8, "Огненный стержень ×8"),
-    ("OBSIDIAN", 16, "Обсидиан ×16"), ("EXPERIENCE_BOTTLE", 16, "Бутыль опыта ×16"), ("LAPIS_BLOCK", 4, "Блок лазурита ×4"),
-    ("QUARTZ", 32, "Кварц ×32"), ("HONEY_BLOCK", 8, "Медовый блок ×8"), ("NAME_TAG", 2, "Бирка ×2"),
-    ("SADDLE", 1, "Седло"), ("GHAST_TEAR", 4, "Слеза гаста ×4"), ("PHANTOM_MEMBRANE", 8, "Мембрана фантома ×8"),
-]
-HIGH_ITEMS = [
-    ("DIAMOND_BLOCK", 2, "Блок алмаза ×2"), ("NETHERITE_SCRAP", 2, "Незеритовый лом ×2"),
-    ("ENCHANTED_GOLDEN_APPLE", 2, "Зачарованное яблоко ×2"), ("SHULKER_SHELL", 4, "Панцирь шалкера ×4"),
-    ("DIAMOND", 16, "Алмаз ×16"), ("EMERALD_BLOCK", 3, "Блок изумруда ×3"), ("TOTEM_OF_UNDYING", 2, "Тотем бессмертия ×2"),
-    ("ANCIENT_DEBRIS", 4, "Древние обломки ×4"), ("GOLD_BLOCK", 6, "Золотой блок ×6"), ("OBSIDIAN", 32, "Обсидиан ×32"),
-]
-# premium-only bigger vanilla items
-PREM_HIGH = [
-    ("NETHERITE_INGOT", 2, "Незеритовый слиток ×2"), ("BEACON", 1, "Маяк"), ("ELYTRA", 1, "Элитры"),
-    ("NETHER_STAR", 1, "Незвёздная звезда"), ("NETHERITE_BLOCK", 1, "Блок незерита"), ("SHULKER_BOX", 2, "Шалкеровый ящик ×2"),
-    ("ENCHANTED_GOLDEN_APPLE", 4, "Зачарованное яблоко ×4"), ("DIAMOND_BLOCK", 4, "Блок алмаза ×4"),
+# a few vanilla basics for the earliest levels (ITEM type, nice stacks)
+VANILLA_EARLY = [
+    ("COOKED_BEEF", 16, "Стейк ×16"), ("COAL", 32, "Уголь ×32"), ("IRON_INGOT", 16, "Железный слиток ×16"),
+    ("ARROW", 64, "Стрелы ×64"), ("GOLD_INGOT", 8, "Золотой слиток ×8"), ("EXPERIENCE_BOTTLE", 16, "Бутыль опыта ×16"),
+    ("ENDER_PEARL", 8, "Жемчуг Края ×8"), ("DIAMOND", 4, "Алмаз ×4"),
 ]
 
-# modded (COMMAND give) pools by tier: (id, count, ru_name)
-LOW_MOD = [("ftbevolution:xy_aluminum_dust", 2, "Ксилюминиевая пыль ×2"), ("ftbevolution:ruby_gem", 1, "Рубин"),
-           ("ftbevolution:genetic_substrate", 1, "Генетический субстрат"), ("ftbevolution:bio_neural_circuit", 1, "Био-нейронная схема"),
-           ("ftbevolution:ender_apple", 2, "Эндерное яблоко ×2"), ("ftbevolution:sands_of_time", 1, "Пески времени")]
-MID_MOD = [("ftbevolution:eclipse_alloy_plate", 2, "Пластина сплава Затмения ×2"), ("ftbevolution:crystalline_element", 1, "Кристаллический элемент"),
-           ("ftbevolution:elemental_arcanite", 1, "Элементальный арканит"), ("ftbevolution:refined_nitro_crystal", 1, "Очищенный нитро-кристалл"),
-           ("ftbevolution:eclipse_alloy_large_plate", 1, "Большая пластина Затмения"), ("ftbevolution:prediction_amalgam", 1, "Амальгама предсказаний"),
-           ("ftbevolution:ender_transmitter", 1, "Эндер-передатчик"), ("ftbevolution:fortron_infused_large_plate", 1, "Фортрон-пластина")]
-HIGH_MOD = [("ftbevolution:awakened_crystalline_shard", 1, "Пробуждённый кристаллический осколок"), ("ftbevolution:evolutionary_matter", 1, "Эволюционная материя"),
-            ("ftbevolution:primal_essence", 1, "Первичная эссенция"), ("ftbevolution:evolutionary_arcanum", 1, "Эволюционный арканум"),
-            ("ftbevolution:black_star", 1, "Чёрная звезда"), ("ftbevolution:supernova", 1, "Сверхновая"),
-            ("ftbevolution:realized_transcendence", 1, "Осознанное превосходство"), ("ftbevolution:ultimate_singularity", 1, "Абсолютная сингулярность")]
+
+def load_modded_pools():
+    """Modded (non-vanilla) upgrader items with icons, grouped by tier, cheapest first."""
+    s = SessionLocal()
+    try:
+        srv = s.execute(select(GameServer).where(GameServer.is_default.is_(True))).scalar_one()
+        rows = s.execute(
+            select(VoidUpgraderReward).where(
+                VoidUpgraderReward.server_id == srv.id,
+                VoidUpgraderReward.enabled.is_(True),
+            )
+        ).scalars().all()
+    finally:
+        s.close()
+    pools = {"common": [], "rare": [], "epic": [], "legendary": []}
+    for r in rows:
+        if r.item_key.startswith("minecraft:"):
+            continue                                  # keep vanilla for ITEM type only
+        pools.setdefault(r.tier, []).append((r.item_key, r.display_name, int(r.vc_value)))
+    rng = random.Random(2026)
+    for k in pools:
+        pools[k].sort(key=lambda x: x[2])             # by value
+        # light shuffle within value order so same-tier picks vary but stay roughly ordered
+        rng.shuffle(pools[k])
+    return pools
 
 
-def tier(level):
-    return 0 if level <= 33 else (1 if level <= 66 else 2)
+POOLS = load_modded_pools()
+_cur = {"common": 0, "rare": 0, "epic": 0, "legendary": 0}
 
 
-def item_pool(t):    return [LOW_ITEMS, MID_ITEMS, HIGH_ITEMS][t]
-def mod_pool(t):     return [LOW_MOD, MID_MOD, HIGH_MOD][t]
+def take(tier):
+    pool = POOLS[tier] or POOLS["rare"] or POOLS["common"]
+    it = pool[_cur[tier] % len(pool)]
+    _cur[tier] = (_cur[tier] + 1)
+    return it
 
 
-def money_free(level):
-    return round((800 + level * 80) / 500) * 500
+def band(level, premium):
+    """Which reward tier this level pulls from (premium leans one band higher)."""
+    if level <= 20:   base = "common"
+    elif level <= 45: base = "rare"
+    elif level <= 72: base = "epic"
+    else:             base = "legendary"
+    if premium:
+        base = {"common": "rare", "rare": "epic", "epic": "legendary", "legendary": "legendary"}[base]
+    return base
 
 
 def esc(s):
-    return s.replace('"', '\\"')
+    return (s or "").replace('"', '\\"')
+
+
+def money_amt(level, premium):
+    v = round((900 + level * 90) / 500) * 500
+    return v * 2 if premium else v
+
+
+def modded_reward(tier, premium):
+    item_key, name, vc = take(tier)
+    cnt = 2 if (premium and vc < 120) else 1
+    disp = name + (f" ×{cnt}" if cnt > 1 else "")
+    return (f'{{type: COMMAND, command: "/minecraft:give {{player}} {item_key} {cnt}", '
+            f'displayName: "{esc(disp)}", icon: "{item_key}"}}')
 
 
 def gen_track(premium):
+    vc_map = VOIDCOIN_PREM if premium else VOIDCOIN_FREE
     lines = []
-    # rotating cursors so items/mod don't repeat back-to-back
-    ic = [0, 0, 0]; mc = [0, 0, 0]
+    vi = 0
     for lvl in range(1, 101):
-        t = tier(lvl)
-        r = None
-        if premium and lvl in VOIDCOIN:
-            r = f"{{type: VOIDCOIN, amount: {VOIDCOIN[lvl]}}}"
-        elif lvl % 10 == 5:                                   # modded item every _5 level
-            pool = mod_pool(t); mid, cnt, nm = pool[mc[t] % len(pool)]; mc[t] += 1
-            cnt = cnt * (2 if premium else 1)
-            r = f'{{type: COMMAND, command: "/minecraft:give {{player}} {mid} {cnt}", displayName: "{esc(nm)}"}}'
-        elif premium and lvl == 100:
-            mat, cnt, nm = PREM_HIGH[0]; r = f'{{type: ITEM, material: {mat}, count: {cnt}, displayName: "{esc(nm)}"}}'
-        elif premium and t == 2 and lvl % 4 == 0:            # premium high-tier bonus items
-            pool = PREM_HIGH; mat, cnt, nm = pool[ic[t] % len(pool)]; ic[t] += 1
-            r = f'{{type: ITEM, material: {mat}, count: {cnt}, displayName: "{esc(nm)}"}}'
-        elif lvl % 3 == 1:                                   # money
-            amt = money_free(lvl) * (2 if premium else 1)
-            r = f"{{type: MONEY, amount: {amt}}}"
-        else:                                                # vanilla item
-            pool = item_pool(t); mat, cnt, nm = pool[ic[t] % len(pool)]; ic[t] += 1
+        if lvl in vc_map:
+            r = f"{{type: VOIDCOIN, amount: {vc_map[lvl]}}}"
+        elif lvl <= 12 and lvl % 3 == 2 and vi < len(VANILLA_EARLY):
+            mat, cnt, nm = VANILLA_EARLY[vi]; vi += 1
             if premium:
-                cnt = min(cnt * 2, 64)
-                nm = nm.split(" ×")[0] + (f" ×{cnt}" if cnt > 1 else "")
-            r = f'{{type: ITEM, material: {mat}, count: {cnt}, displayName: "{esc(nm)}"}}'
+                cnt = min(cnt * 2, 64); nm = nm.split(" ×")[0] + (f" ×{cnt}" if cnt > 1 else "")
+            r = f'{{type: ITEM, material: {mat}, count: {cnt}, displayName: "{esc(nm)}", icon: "minecraft:{mat.lower()}"}}'
+        elif lvl % 4 == 0:
+            r = f"{{type: MONEY, amount: {money_amt(lvl, premium)}}}"
+        else:
+            r = modded_reward(band(lvl, premium), premium)
         lines.append(f"  {lvl}: {r}")
     return "\n".join(lines)
 
 
 def main():
     out = ["# VoidRP Battle Pass — Осенний сезон 2026 — 100 уровней",
-           "# Сгенерировано gen_bp_rewards.py. Без EXP-наград; Void Coin на значимых уровнях премиума.",
+           "# Сгенерировано gen_bp_rewards.py. Моды из выверенного пула, у каждого icon для WebGUI.",
+           "# Без EXP; Void Coin: free 10/50, premium каждый 10-й (100→1000).",
            "free:", gen_track(False), "premium:", gen_track(True), ""]
     OUT.write_text("\n".join(out), encoding="utf-8")
-    print(f"wrote {OUT} (100 levels free + premium, no EXP, voidcoin milestones)")
+    print(f"wrote {OUT}")
+    print("modded pool sizes:", {k: len(v) for k, v in POOLS.items()})
 
 
 if __name__ == "__main__":
