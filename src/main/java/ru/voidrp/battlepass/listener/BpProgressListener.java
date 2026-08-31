@@ -89,7 +89,35 @@ public final class BpProgressListener implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             premiumStorage.syncFromBackend(uuid, name);
             pushProgressAsync(uuid);
+            // Nudge: unclaimed rewards waiting → drives opening /bp.
+            int unclaimed = countUnclaimed(uuid);
+            if (unclaimed > 0 && backendClient != null && backendClient.isConfigured()) {
+                backendClient.pushNotification(name, "battlepass",
+                        "Награды Battle Pass ждут! (" + unclaimed + ")",
+                        "У тебя " + unclaimed + " неполученных наград сезона. Забери их во вкладке Battle Pass.",
+                        "battlepass", "gold", "route", "battlepass", "Открыть");
+            }
+            // Weekend x2 XP announce.
+            if (xpMultiplier() > 1.0) {
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    if (player.isOnline()) player.sendMessage("§6§l✦ §eВыходные: §a×2 XP Battle Pass §7— самое время качать пасс!");
+                });
+            }
         });
+    }
+
+    /** Number of unclaimed rewards the player can already take (free + premium if they have it). */
+    private int countUnclaimed(UUID uuid) {
+        BattlePassData data = storage.get(uuid);
+        if (data == null) return 0;
+        boolean prem = premiumStorage.hasPremium(uuid);
+        int lvl = data.getLevel();
+        int n = 0;
+        for (int L = 1; L <= lvl; L++) {
+            if (seasonRewards.getFreeReward(L) != null && !data.isFreeClaimed(L)) n++;
+            if (prem && seasonRewards.getPremiumReward(L) != null && !data.isPremiumClaimed(L)) n++;
+        }
+        return n;
     }
 
     @EventHandler
@@ -196,9 +224,18 @@ public final class BpProgressListener implements Listener {
      * daily cap ({@code daily-xp-cap} in config.yml, default 8000; 0 disables the cap).
      * Quest and daily-quest-plugin XP bypass this cap since they are naturally limited.
      */
+    /** x2 Battle Pass XP on weekends (Sat/Sun). */
+    public static double xpMultiplier() {
+        java.time.DayOfWeek d = java.time.LocalDate.now().getDayOfWeek();
+        return (d == java.time.DayOfWeek.SATURDAY || d == java.time.DayOfWeek.SUNDAY) ? 2.0 : 1.0;
+    }
+
     private void addGrindXp(Player player, long amount) {
         if (amount <= 0) return;
+        double mult = xpMultiplier();
+        amount = Math.round(amount * mult);
         long cap = plugin != null ? plugin.getConfig().getLong("daily-xp-cap", 8000L) : 8000L;
+        if (cap > 0) cap = Math.round(cap * mult);   // weekend also raises the cap so 2x actually lands
         if (cap > 0) {
             long today = java.time.LocalDate.now().toEpochDay();
             long[] rec = grindXpToday.get(player.getUniqueId());

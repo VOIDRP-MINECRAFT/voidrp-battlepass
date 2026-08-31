@@ -194,6 +194,7 @@ public final class BattlePassPlugin extends JavaPlugin {
 
     private void addXpSafe(Player player, long amount) {
         if (!player.isOnline()) return;
+        amount = Math.round(amount * ru.voidrp.battlepass.listener.BpProgressListener.xpMultiplier());  // x2 on weekends
         amount = NationResearchBonus.apply(player, amount);
         int oldLevel = storage.addXp(player.getUniqueId(), amount);
         int newLevel = storage.get(player.getUniqueId()).getLevel();
