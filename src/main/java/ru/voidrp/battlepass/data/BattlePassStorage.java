@@ -83,7 +83,8 @@ public final class BattlePassStorage {
             long xp = obj.has("xp") ? obj.get("xp").getAsLong() : 0L;
             Set<Integer> claimedFree = parseIntSet(obj, "claimedFree");
             Set<Integer> claimedPremium = parseIntSet(obj, "claimedPremium");
-            return new BattlePassData(season, xp, claimedFree, claimedPremium);
+            int prestigeGranted = obj.has("prestigeGranted") ? obj.get("prestigeGranted").getAsInt() : 0;
+            return new BattlePassData(season, xp, claimedFree, claimedPremium, prestigeGranted);
         } catch (Exception e) {
             log.warning("[BattlePass] Failed to load data for " + uuid + " season " + season + ": " + e.getMessage());
             return new BattlePassData(season);
@@ -96,6 +97,7 @@ public final class BattlePassStorage {
         JsonObject obj = new JsonObject();
         obj.addProperty("season", data.getSeason());
         obj.addProperty("xp", data.getXp());
+        obj.addProperty("prestigeGranted", data.getPrestigeGranted());
         JsonArray freeArr = new JsonArray();
         for (int lvl : data.getClaimedFree()) freeArr.add(lvl);
         obj.add("claimedFree", freeArr);

@@ -12,19 +12,26 @@ public final class BattlePassData {
     private long xp;
     private Set<Integer> claimedFree;
     private Set<Integer> claimedPremium;
+    private int prestigeGranted;   // how many prestige levels (past MAX_LEVEL) have been rewarded
 
     public BattlePassData(String season) {
         this.season = season;
         this.xp = 0;
         this.claimedFree = new HashSet<>();
         this.claimedPremium = new HashSet<>();
+        this.prestigeGranted = 0;
     }
 
     public BattlePassData(String season, long xp, Set<Integer> claimedFree, Set<Integer> claimedPremium) {
+        this(season, xp, claimedFree, claimedPremium, 0);
+    }
+
+    public BattlePassData(String season, long xp, Set<Integer> claimedFree, Set<Integer> claimedPremium, int prestigeGranted) {
         this.season = season;
         this.xp = xp;
         this.claimedFree = new HashSet<>(claimedFree);
         this.claimedPremium = new HashSet<>(claimedPremium);
+        this.prestigeGranted = Math.max(0, prestigeGranted);
     }
 
     public String getSeason() { return season; }
@@ -68,4 +75,12 @@ public final class BattlePassData {
 
     public void claimFree(int level) { claimedFree.add(level); }
     public void claimPremium(int level) { claimedPremium.add(level); }
+
+    /** Prestige levels earned past MAX_LEVEL (each = one extra XP_PER_LEVEL beyond level 100). */
+    public int getPrestige() {
+        return Math.max(0, (int) (xp / XP_PER_LEVEL) - (MAX_LEVEL - 1));
+    }
+
+    public int getPrestigeGranted() { return prestigeGranted; }
+    public void setPrestigeGranted(int n) { this.prestigeGranted = Math.max(0, n); }
 }

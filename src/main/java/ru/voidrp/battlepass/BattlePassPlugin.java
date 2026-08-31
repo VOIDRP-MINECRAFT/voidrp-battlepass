@@ -215,6 +215,7 @@ public final class BattlePassPlugin extends JavaPlugin {
                                 "battlepass", "gold", "route", "battlepass", "Открыть Battle Pass"));
             }
         }
+        PrestigeGrant.check(this, storage, player);   // reward prestige levels past 100
     }
 
     private Economy setupEconomy() {

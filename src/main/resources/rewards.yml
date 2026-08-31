@@ -2,204 +2,204 @@
 # Сгенерировано gen_bp_rewards.py. Моды из выверенного пула, у каждого icon для WebGUI.
 # Без EXP; Void Coin: free 10/50, premium каждый 10-й (100→1000).
 free:
-  1: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:metal_press 1", displayName: "Металлический пресс", icon: "immersiveengineering:metal_press"}
+  1: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:dislocator 1", displayName: "Телепортер", icon: "draconicevolution:dislocator"}
   2: {type: ITEM, material: COOKED_BEEF, count: 16, displayName: "Стейк ×16", icon: "minecraft:cooked_beef"}
-  3: {type: COMMAND, command: "/minecraft:give {player} vanillabackport:green_harness 1", displayName: "Зелёная упряжь", icon: "vanillabackport:green_harness"}
+  3: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_revolver_electro 1", displayName: "Электронный усилитель", icon: "immersiveengineering:toolupgrade_revolver_electro"}
   4: {type: MONEY, amount: 1500}
   5: {type: ITEM, material: COAL, count: 32, displayName: "Уголь ×32", icon: "minecraft:coal"}
-  6: {type: COMMAND, command: "/minecraft:give {player} comforts:rope_and_nail 1", displayName: "Верёвка и гвоздь", icon: "comforts:rope_and_nail"}
-  7: {type: COMMAND, command: "/minecraft:give {player} handcrafted:pink_cushion 1", displayName: "Розовая подушка", icon: "handcrafted:pink_cushion"}
+  6: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:survival_infinity_upgrade 1", displayName: "Улучшение «Бесконечность»", icon: "sophisticatedbackpacks:survival_infinity_upgrade"}
+  7: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:pump_upgrade 1", displayName: "Улучшение «Помпа»", icon: "sophisticatedbackpacks:pump_upgrade"}
   8: {type: ITEM, material: IRON_INGOT, count: 16, displayName: "Железный слиток ×16", icon: "minecraft:iron_ingot"}
-  9: {type: COMMAND, command: "/minecraft:give {player} mekanism:steel_casing 1", displayName: "Стальной корпус", icon: "mekanism:steel_casing"}
+  9: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_starter_tier 1", displayName: "Улучшение «Переполнение 0»", icon: "sophisticatedbackpacks:stack_upgrade_starter_tier"}
   10: {type: VOIDCOIN, amount: 30}
   11: {type: ITEM, material: ARROW, count: 64, displayName: "Стрелы ×64", icon: "minecraft:arrow"}
   12: {type: MONEY, amount: 2000}
-  13: {type: COMMAND, command: "/minecraft:give {player} create:iron_sheet 1", displayName: "Железный лист", icon: "create:iron_sheet"}
-  14: {type: COMMAND, command: "/minecraft:give {player} pneumaticcraft:oil_bucket 1", displayName: "Ведро нефти", icon: "pneumaticcraft:oil_bucket"}
-  15: {type: COMMAND, command: "/minecraft:give {player} mekanism:combiner 1", displayName: "Объединитель", icon: "mekanism:combiner"}
+  13: {type: COMMAND, command: "/minecraft:give {player} cataclysm:lava_power_cell 1", displayName: "Лавовая батарея", icon: "cataclysm:lava_power_cell"}
+  14: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:info_tablet 1", displayName: "Информационный планшет", icon: "draconicevolution:info_tablet"}
+  15: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:diamond_backpack 1", displayName: "Алмазный рюкзак", icon: "sophisticatedbackpacks:diamond_backpack"}
   16: {type: MONEY, amount: 2500}
-  17: {type: COMMAND, command: "/minecraft:give {player} handcrafted:stackable_book 1", displayName: "Стопка книг", icon: "handcrafted:stackable_book"}
-  18: {type: COMMAND, command: "/minecraft:give {player} handcrafted:white_sheet 1", displayName: "Белая простыня", icon: "handcrafted:white_sheet"}
-  19: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:fertilizer 1", displayName: "Удобритель", icon: "industrialforegoing:fertilizer"}
+  17: {type: COMMAND, command: "/minecraft:give {player} createdieselgenerators:pumpjack_bearing 1", displayName: "Подшипник насосной установки", icon: "createdieselgenerators:pumpjack_bearing"}
+  18: {type: COMMAND, command: "/minecraft:give {player} ae2:drive 1", displayName: "МЭ накопитель", icon: "ae2:drive"}
+  19: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:ingot_electrum 1", displayName: "Электрумовый слиток", icon: "immersiveengineering:ingot_electrum"}
   20: {type: MONEY, amount: 2500}
-  21: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:battery_upgrade 1", displayName: "Улучшение «Аккумулятор»", icon: "sophisticatedbackpacks:battery_upgrade"}
-  22: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:auto_blasting_upgrade 1", displayName: "Улучшение «Автоплавильня»", icon: "sophisticatedbackpacks:auto_blasting_upgrade"}
-  23: {type: COMMAND, command: "/minecraft:give {player} cataclysm:void_shard 1", displayName: "Осколок пустоты", icon: "cataclysm:void_shard"}
+  21: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:anvil_upgrade 1", displayName: "Улучшение «Наковальня»", icon: "sophisticatedbackpacks:anvil_upgrade"}
+  22: {type: COMMAND, command: "/minecraft:give {player} ae2:spatial_storage_cell_16 1", displayName: "16³ Пространственная ячейка хранения", icon: "ae2:spatial_storage_cell_16"}
+  23: {type: COMMAND, command: "/minecraft:give {player} cataclysm:void_core 1", displayName: "Ядро пустоты", icon: "cataclysm:void_core"}
   24: {type: MONEY, amount: 3000}
-  25: {type: COMMAND, command: "/minecraft:give {player} create:linked_controller 1", displayName: "Контроллер частот", icon: "create:linked_controller"}
-  26: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_hoe 1", displayName: "Мотыга Дракона", icon: "draconicevolution:draconic_hoe"}
-  27: {type: COMMAND, command: "/minecraft:give {player} cataclysm:amethyst_crab_shell 1", displayName: "Аметистовый панцирь краба", icon: "cataclysm:amethyst_crab_shell"}
+  25: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_sword 1", displayName: "Меч Дракона", icon: "draconicevolution:draconic_sword"}
+  26: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:fortune_addon 1", displayName: "Улучшение удачи", icon: "industrialforegoing:fortune_addon"}
+  27: {type: COMMAND, command: "/minecraft:give {player} ae2:item_storage_cell_16k 1", displayName: "16К МЭ предметная ячейка хранения", icon: "ae2:item_storage_cell_16k"}
   28: {type: MONEY, amount: 3500}
-  29: {type: COMMAND, command: "/minecraft:give {player} create:precision_mechanism 1", displayName: "Механизм точности", icon: "create:precision_mechanism"}
-  30: {type: COMMAND, command: "/minecraft:give {player} mekanism:basic_control_circuit 1", displayName: "Базовая схема управления", icon: "mekanism:basic_control_circuit"}
-  31: {type: COMMAND, command: "/minecraft:give {player} ae2:nether_quartz_pickaxe 1", displayName: "Кирка из незер-кварца", icon: "ae2:nether_quartz_pickaxe"}
+  29: {type: COMMAND, command: "/minecraft:give {player} ae2:nether_quartz_sword 1", displayName: "Меч из незер-кварца", icon: "ae2:nether_quartz_sword"}
+  30: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:pickup_upgrade 1", displayName: "Улучшение «Подбор»", icon: "sophisticatedbackpacks:pickup_upgrade"}
+  31: {type: COMMAND, command: "/minecraft:give {player} ae2:certus_quartz_sword 1", displayName: "Меч из истинного кварца", icon: "ae2:certus_quartz_sword"}
   32: {type: MONEY, amount: 4000}
-  33: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:advanced_dislocator 1", displayName: "Продвинутый телепортер", icon: "draconicevolution:advanced_dislocator"}
-  34: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:dislocator 1", displayName: "Телепортер", icon: "draconicevolution:dislocator"}
-  35: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:diamond_gear 1", displayName: "Алмазная шестерня", icon: "industrialforegoing:diamond_gear"}
+  33: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_shovel 1", displayName: "Лопата Дракона", icon: "draconicevolution:draconic_shovel"}
+  34: {type: COMMAND, command: "/minecraft:give {player} cataclysm:black_steel_sword 1", displayName: "Меч из чёрной стали", icon: "cataclysm:black_steel_sword"}
+  35: {type: COMMAND, command: "/minecraft:give {player} ae2:engineering_processor 1", displayName: "Инженерный процессор", icon: "ae2:engineering_processor"}
   36: {type: MONEY, amount: 4000}
-  37: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:advanced_alchemy_upgrade 1", displayName: "Продвинутое улучшение «Алхимия»", icon: "sophisticatedbackpacks:advanced_alchemy_upgrade"}
-  38: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:diamond_backpack 1", displayName: "Алмазный рюкзак", icon: "sophisticatedbackpacks:diamond_backpack"}
-  39: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_drill_damage 1", displayName: "Дополнительные буровые головки", icon: "immersiveengineering:toolupgrade_drill_damage"}
+  37: {type: COMMAND, command: "/minecraft:give {player} ae2:fluid_storage_cell_1k 1", displayName: "1К МЭ жидкостная ячейка хранения", icon: "ae2:fluid_storage_cell_1k"}
+  38: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:leaf_shearing 1", displayName: "Улучшение стрижки листвы", icon: "industrialforegoing:leaf_shearing"}
+  39: {type: COMMAND, command: "/minecraft:give {player} create:andesite_alloy 1", displayName: "Андезитовый сплав", icon: "create:andesite_alloy"}
   40: {type: MONEY, amount: 4500}
-  41: {type: COMMAND, command: "/minecraft:give {player} ae2:certus_quartz_crystal 1", displayName: "Кристалл истинного кварца", icon: "ae2:certus_quartz_crystal"}
-  42: {type: COMMAND, command: "/minecraft:give {player} create:cardboard_helmet 1", displayName: "Картонный шлем", icon: "create:cardboard_helmet"}
-  43: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_railgun_scope 1", displayName: "Прицел", icon: "immersiveengineering:toolupgrade_railgun_scope"}
+  41: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:advanced_pickup_upgrade 1", displayName: "Продвинутое улучшение «Подбор»", icon: "sophisticatedbackpacks:advanced_pickup_upgrade"}
+  42: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_downgrade_tier_3 1", displayName: "Улучшение «Понижение III»", icon: "sophisticatedbackpacks:stack_downgrade_tier_3"}
+  43: {type: COMMAND, command: "/minecraft:give {player} ae2:annihilation_core 1", displayName: "Ядро уничтожения", icon: "ae2:annihilation_core"}
   44: {type: MONEY, amount: 5000}
-  45: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_shovel 1", displayName: "Лопата Виверны", icon: "draconicevolution:wyvern_shovel"}
-  46: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_4 1", displayName: "Улучшение «Переполнение IV»", icon: "sophisticatedbackpacks:stack_upgrade_tier_4"}
-  47: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 1", displayName: "Дракониевый слиток", icon: "draconicevolution:draconium_ingot"}
+  45: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_1 1", displayName: "Улучшение «Переполнение I»", icon: "sophisticatedbackpacks:stack_upgrade_tier_1"}
+  46: {type: COMMAND, command: "/minecraft:give {player} createaddition:electrum_amulet 1", displayName: "Амулет из бледного золота", icon: "createaddition:electrum_amulet"}
+  47: {type: COMMAND, command: "/minecraft:give {player} mekanism:ultimate_control_circuit 1", displayName: "Совершенная схема управления", icon: "mekanism:ultimate_control_circuit"}
   48: {type: MONEY, amount: 5000}
-  49: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_core 1", displayName: "Ядро Дракона", icon: "draconicevolution:draconium_core"}
+  49: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:armor_steel_leggings 1", displayName: "Стальные поножи", icon: "immersiveengineering:armor_steel_leggings"}
   50: {type: VOIDCOIN, amount: 60}
-  51: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crafting_core 1", displayName: "Ядро слияния", icon: "draconicevolution:crafting_core"}
+  51: {type: COMMAND, command: "/minecraft:give {player} createbigcannons:cannon_crafting_wand 1", displayName: "Жезл для изготовления пушек", icon: "createbigcannons:cannon_crafting_wand"}
   52: {type: MONEY, amount: 5500}
-  53: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:module_core 1", displayName: "Ядро модуля", icon: "draconicevolution:module_core"}
-  54: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_nugget 1", displayName: "Кусочек пробуждённого дракония", icon: "draconicevolution:awakened_draconium_nugget"}
-  55: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:energy_core 1", displayName: "Энергетическое ядро", icon: "draconicevolution:energy_core"}
+  53: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:creative_capacitor 1", displayName: "Творческий конденсатор", icon: "draconicevolution:creative_capacitor"}
+  54: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:advanced_magnet 1", displayName: "Пробуждённый телепортационный магнит", icon: "draconicevolution:advanced_magnet"}
+  55: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_chemthrower_multitank 1", displayName: "Многокамерный резервуар", icon: "immersiveengineering:toolupgrade_chemthrower_multitank"}
   56: {type: MONEY, amount: 6000}
-  57: {type: COMMAND, command: "/minecraft:give {player} justhammers:diamond_reinforced_impact_hammer 1", displayName: "Алмазный молот", icon: "justhammers:diamond_reinforced_impact_hammer"}
-  58: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 1", displayName: "Ядро Виверны", icon: "draconicevolution:wyvern_core"}
-  59: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_crafting_injector 1", displayName: "Инжектор слияния Дракона", icon: "draconicevolution:awakened_crafting_injector"}
+  57: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_core 1", displayName: "Ядро Дракона", icon: "draconicevolution:draconium_core"}
+  58: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:energy_core 1", displayName: "Энергетическое ядро", icon: "draconicevolution:energy_core"}
+  59: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:netherite_knife 1", displayName: "Незеритовый нож", icon: "farmersdelight:netherite_knife"}
   60: {type: MONEY, amount: 6500}
-  61: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_energy_core 1", displayName: "Энергетический контроллер Виверны", icon: "draconicevolution:wyvern_energy_core"}
-  62: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 1", displayName: "Пробуждённый дракониевый слиток", icon: "draconicevolution:awakened_draconium_ingot"}
-  63: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:netherite_backpack 1", displayName: "Незеритовый рюкзак", icon: "sophisticatedbackpacks:netherite_backpack"}
+  61: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:module_core 1", displayName: "Ядро модуля", icon: "draconicevolution:module_core"}
+  62: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_crafting_injector 1", displayName: "Инжектор слияния Дракона", icon: "draconicevolution:awakened_crafting_injector"}
+  63: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 1", displayName: "Пробуждённый дракониевый слиток", icon: "draconicevolution:awakened_draconium_ingot"}
   64: {type: MONEY, amount: 6500}
-  65: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:netherite_knife 1", displayName: "Незеритовый нож", icon: "farmersdelight:netherite_knife"}
-  66: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:basic_crafting_injector 1", displayName: "Базовый инжектор слияния", icon: "draconicevolution:basic_crafting_injector"}
-  67: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_ministrosity_bucket 1", displayName: "Незеритовое Мини-Чудище в ведре", icon: "cataclysm:netherite_ministrosity_bucket"}
+  65: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_ministrosity_bucket 1", displayName: "Незеритовое Мини-Чудище в ведре", icon: "cataclysm:netherite_ministrosity_bucket"}
+  66: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crystal_binder 1", displayName: "Связыватель кристаллов", icon: "draconicevolution:crystal_binder"}
+  67: {type: COMMAND, command: "/minecraft:give {player} justhammers:diamond_reinforced_impact_hammer 1", displayName: "Алмазный молот", icon: "justhammers:diamond_reinforced_impact_hammer"}
   68: {type: MONEY, amount: 7000}
-  69: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_effigy 1", displayName: "Незеритовое чучело", icon: "cataclysm:netherite_effigy"}
+  69: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_4 1", displayName: "Улучшение «Переполнение IV»", icon: "sophisticatedbackpacks:stack_upgrade_tier_4"}
   70: {type: COMMAND, command: "/minecraft:give {player} ae2:quantum_ring 1", displayName: "МЭ квантовое кольцо", icon: "ae2:quantum_ring"}
-  71: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crystal_binder 1", displayName: "Связыватель кристаллов", icon: "draconicevolution:crystal_binder"}
+  71: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:basic_crafting_injector 1", displayName: "Базовый инжектор слияния", icon: "draconicevolution:basic_crafting_injector"}
   72: {type: MONEY, amount: 7500}
-  73: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_boots 1", displayName: "Незеритовые лаволазные ботинки", icon: "create:netherite_diving_boots"}
-  74: {type: COMMAND, command: "/minecraft:give {player} amendments:dragon_charge 1", displayName: "Драконий заряд", icon: "amendments:dragon_charge"}
-  75: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_crystal 1", displayName: "Кристалл Хаоса", icon: "draconicevolution:chaos_crystal"}
+  73: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_energy_core 1", displayName: "Энергетический контроллер Виверны", icon: "draconicevolution:wyvern_energy_core"}
+  74: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_effigy 1", displayName: "Незеритовое чучело", icon: "cataclysm:netherite_effigy"}
+  75: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:netherite_backpack 1", displayName: "Незеритовый рюкзак", icon: "sophisticatedbackpacks:netherite_backpack"}
   76: {type: MONEY, amount: 7500}
-  77: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_energy_core 1", displayName: "Энергетический контроллер Хаоса", icon: "draconicevolution:chaotic_energy_core"}
-  78: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_pickaxe 1", displayName: "Кирка Хаоса", icon: "draconicevolution:chaotic_pickaxe"}
-  79: {type: COMMAND, command: "/minecraft:give {player} cataclysm:ignitium_elytra_chestplate 1", displayName: "Игнитовый крылатый нагрудник", icon: "cataclysm:ignitium_elytra_chestplate"}
+  77: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 1", displayName: "Дракониевый слиток", icon: "draconicevolution:draconium_ingot"}
+  78: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:infinity_trident 1", displayName: "Бесконечный трезубец", icon: "industrialforegoing:infinity_trident"}
+  79: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crafting_core 1", displayName: "Ядро слияния", icon: "draconicevolution:crafting_core"}
   80: {type: MONEY, amount: 8000}
-  81: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 1", displayName: "Осколок Хаоса", icon: "draconicevolution:chaos_shard"}
-  82: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 1", displayName: "Пробуждённое ядро", icon: "draconicevolution:awakened_core"}
-  83: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_axe 1", displayName: "Топор Хаоса", icon: "draconicevolution:chaotic_axe"}
+  81: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 1", displayName: "Ядро Виверны", icon: "draconicevolution:wyvern_core"}
+  82: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_core 1", displayName: "Ядро Дракона", icon: "draconicevolution:draconium_core"}
+  83: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:energy_core 1", displayName: "Энергетическое ядро", icon: "draconicevolution:energy_core"}
   84: {type: MONEY, amount: 8500}
-  85: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_hoe 1", displayName: "Мотыга Хаоса", icon: "draconicevolution:chaotic_hoe"}
-  86: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_staff 1", displayName: "Посох силы Хаоса", icon: "draconicevolution:chaotic_staff"}
-  87: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_bow 1", displayName: "Лук Хаоса", icon: "draconicevolution:chaotic_bow"}
+  85: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:netherite_knife 1", displayName: "Незеритовый нож", icon: "farmersdelight:netherite_knife"}
+  86: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_helmet 1", displayName: "Незеритовый лаволазный шлем", icon: "create:netherite_diving_helmet"}
+  87: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_staff 1", displayName: "Посох силы Хаоса", icon: "draconicevolution:chaotic_staff"}
   88: {type: MONEY, amount: 9000}
-  89: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 1", displayName: "Ядро Хаоса", icon: "draconicevolution:chaotic_core"}
-  90: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_helmet 1", displayName: "Незеритовый лаволазный шлем", icon: "create:netherite_diving_helmet"}
-  91: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_staff 1", displayName: "Посох силы Дракона", icon: "draconicevolution:draconic_staff"}
+  89: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_bow 1", displayName: "Лук Хаоса", icon: "draconicevolution:chaotic_bow"}
+  90: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_energy_core 1", displayName: "Энергетический контроллер Хаоса", icon: "draconicevolution:chaotic_energy_core"}
+  91: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 1", displayName: "Осколок Хаоса", icon: "draconicevolution:chaos_shard"}
   92: {type: MONEY, amount: 9000}
-  93: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_crafting_injector 1", displayName: "Инжектор слияния Хаоса", icon: "draconicevolution:chaotic_crafting_injector"}
-  94: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_sword 1", displayName: "Меч Хаоса", icon: "draconicevolution:chaotic_sword"}
-  95: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_energy_core 1", displayName: "Энергетический контроллер Дракона", icon: "draconicevolution:draconic_energy_core"}
+  93: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 1", displayName: "Ядро Хаоса", icon: "draconicevolution:chaotic_core"}
+  94: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_chestpiece 1", displayName: "Нагрудник Хаоса", icon: "draconicevolution:chaotic_chestpiece"}
+  95: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_pickaxe 1", displayName: "Кирка Хаоса", icon: "draconicevolution:chaotic_pickaxe"}
   96: {type: MONEY, amount: 9500}
-  97: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_chestpiece 1", displayName: "Нагрудник Хаоса", icon: "draconicevolution:chaotic_chestpiece"}
-  98: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_boots 1", displayName: "Незеритовые лаволазные ботинки", icon: "create:netherite_diving_boots"}
-  99: {type: COMMAND, command: "/minecraft:give {player} amendments:dragon_charge 1", displayName: "Драконий заряд", icon: "amendments:dragon_charge"}
+  97: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 1", displayName: "Пробуждённое ядро", icon: "draconicevolution:awakened_core"}
+  98: {type: COMMAND, command: "/minecraft:give {player} amendments:dragon_charge 1", displayName: "Драконий заряд", icon: "amendments:dragon_charge"}
+  99: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_staff 1", displayName: "Посох силы Дракона", icon: "draconicevolution:draconic_staff"}
   100: {type: MONEY, amount: 10000}
 premium:
-  1: {type: COMMAND, command: "/minecraft:give {player} ae2:calculation_processor 2", displayName: "Вычислительный процессор ×2", icon: "ae2:calculation_processor"}
+  1: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_shield_flash 2", displayName: "Лампа-вспышка ×2", icon: "immersiveengineering:toolupgrade_shield_flash"}
   2: {type: ITEM, material: COOKED_BEEF, count: 32, displayName: "Стейк ×32", icon: "minecraft:cooked_beef"}
-  3: {type: COMMAND, command: "/minecraft:give {player} ae2:fluid_storage_cell_1k 2", displayName: "1К МЭ жидкостная ячейка хранения ×2", icon: "ae2:fluid_storage_cell_1k"}
+  3: {type: COMMAND, command: "/minecraft:give {player} create:zinc_ingot 2", displayName: "Цинковый слиток ×2", icon: "create:zinc_ingot"}
   4: {type: MONEY, amount: 3000}
   5: {type: ITEM, material: COAL, count: 64, displayName: "Уголь ×64", icon: "minecraft:coal"}
-  6: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:alchemy_upgrade 2", displayName: "Улучшение «Алхимия» ×2", icon: "sophisticatedbackpacks:alchemy_upgrade"}
-  7: {type: COMMAND, command: "/minecraft:give {player} ae2:nether_quartz_axe 2", displayName: "Топор из незер-кварца ×2", icon: "ae2:nether_quartz_axe"}
+  6: {type: COMMAND, command: "/minecraft:give {player} mekanism:basic_control_circuit 2", displayName: "Базовая схема управления ×2", icon: "mekanism:basic_control_circuit"}
+  7: {type: COMMAND, command: "/minecraft:give {player} cataclysm:ignitium_helmet 2", displayName: "Игнитовый шлем ×2", icon: "cataclysm:ignitium_helmet"}
   8: {type: ITEM, material: IRON_INGOT, count: 32, displayName: "Железный слиток ×32", icon: "minecraft:iron_ingot"}
-  9: {type: COMMAND, command: "/minecraft:give {player} ae2:fluix_upgrade_smithing_template 2", displayName: "Токовое улучшение ×2", icon: "ae2:fluix_upgrade_smithing_template"}
+  9: {type: COMMAND, command: "/minecraft:give {player} cataclysm:void_shard 2", displayName: "Осколок пустоты ×2", icon: "cataclysm:void_shard"}
   10: {type: VOIDCOIN, amount: 100}
   11: {type: ITEM, material: ARROW, count: 64, displayName: "Стрелы ×64", icon: "minecraft:arrow"}
   12: {type: MONEY, amount: 4000}
-  13: {type: COMMAND, command: "/minecraft:give {player} cataclysm:black_steel_sword 2", displayName: "Меч из чёрной стали ×2", icon: "cataclysm:black_steel_sword"}
-  14: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:advanced_pickup_upgrade 2", displayName: "Продвинутое улучшение «Подбор» ×2", icon: "sophisticatedbackpacks:advanced_pickup_upgrade"}
-  15: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:fortune_addon 2", displayName: "Улучшение удачи ×2", icon: "industrialforegoing:fortune_addon"}
+  13: {type: COMMAND, command: "/minecraft:give {player} createdieselgenerators:distillation_controller 2", displayName: "Контроллер дистилляции ×2", icon: "createdieselgenerators:distillation_controller"}
+  14: {type: COMMAND, command: "/minecraft:give {player} ae2:item_storage_cell_256k 2", displayName: "256К МЭ предметная ячейка хранения ×2", icon: "ae2:item_storage_cell_256k"}
+  15: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_sword 2", displayName: "Меч Виверны ×2", icon: "draconicevolution:wyvern_sword"}
   16: {type: MONEY, amount: 5000}
-  17: {type: COMMAND, command: "/minecraft:give {player} waystones:attuned_shard 2", displayName: "Настроенный осколок ×2", icon: "waystones:attuned_shard"}
-  18: {type: COMMAND, command: "/minecraft:give {player} createaddition:electrum_amulet 2", displayName: "Амулет из бледного золота ×2", icon: "createaddition:electrum_amulet"}
-  19: {type: COMMAND, command: "/minecraft:give {player} ae2:creative_storage_cell 2", displayName: "Творческая МЭ ячейка хранения ×2", icon: "ae2:creative_storage_cell"}
+  17: {type: COMMAND, command: "/minecraft:give {player} cataclysm:zweiender 2", displayName: "Двуручный меч ×2", icon: "cataclysm:zweiender"}
+  18: {type: COMMAND, command: "/minecraft:give {player} ae2:cell_component_1k 2", displayName: "1К МЭ компонент хранения ×2", icon: "ae2:cell_component_1k"}
+  19: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_capacitor 2", displayName: "Конденсатор Виверны ×2", icon: "draconicevolution:wyvern_capacitor"}
   20: {type: VOIDCOIN, amount: 120}
-  21: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:infinity_trident 2", displayName: "Бесконечный трезубец ×2", icon: "industrialforegoing:infinity_trident"}
-  22: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_4 2", displayName: "Улучшение «Переполнение IV» ×2", icon: "sophisticatedbackpacks:stack_upgrade_tier_4"}
-  23: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 1", displayName: "Дракониевый слиток", icon: "draconicevolution:draconium_ingot"}
+  21: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:filter_upgrade 2", displayName: "Улучшение «Фильтр» ×2", icon: "sophisticatedbackpacks:filter_upgrade"}
+  22: {type: COMMAND, command: "/minecraft:give {player} cataclysm:soul_render 2", displayName: "Расплата душ ×2", icon: "cataclysm:soul_render"}
+  23: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:compacting_upgrade 2", displayName: "Улучшение «Сжатие» ×2", icon: "sophisticatedbackpacks:compacting_upgrade"}
   24: {type: MONEY, amount: 6000}
-  25: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_core 1", displayName: "Ядро Дракона", icon: "draconicevolution:draconium_core"}
-  26: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crafting_core 1", displayName: "Ядро слияния", icon: "draconicevolution:crafting_core"}
-  27: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:module_core 1", displayName: "Ядро модуля", icon: "draconicevolution:module_core"}
+  25: {type: COMMAND, command: "/minecraft:give {player} cataclysm:crystallized_coral 2", displayName: "Кристаллизованный коралл ×2", icon: "cataclysm:crystallized_coral"}
+  26: {type: COMMAND, command: "/minecraft:give {player} ae2:item_storage_cell_64k 2", displayName: "64К МЭ предметная ячейка хранения ×2", icon: "ae2:item_storage_cell_64k"}
+  27: {type: COMMAND, command: "/minecraft:give {player} mekanism:alloy_infused 2", displayName: "Наполненный сплав ×2", icon: "mekanism:alloy_infused"}
   28: {type: MONEY, amount: 7000}
-  29: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_nugget 2", displayName: "Кусочек пробуждённого дракония ×2", icon: "draconicevolution:awakened_draconium_nugget"}
+  29: {type: COMMAND, command: "/minecraft:give {player} cataclysm:black_steel_pickaxe 2", displayName: "Кирка из чёрной стали ×2", icon: "cataclysm:black_steel_pickaxe"}
   30: {type: VOIDCOIN, amount: 140}
-  31: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:energy_core 1", displayName: "Энергетическое ядро", icon: "draconicevolution:energy_core"}
+  31: {type: COMMAND, command: "/minecraft:give {player} ae2:charged_staff 2", displayName: "Заряженный посох ×2", icon: "ae2:charged_staff"}
   32: {type: MONEY, amount: 8000}
-  33: {type: COMMAND, command: "/minecraft:give {player} justhammers:diamond_reinforced_impact_hammer 2", displayName: "Алмазный молот ×2", icon: "justhammers:diamond_reinforced_impact_hammer"}
-  34: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 1", displayName: "Ядро Виверны", icon: "draconicevolution:wyvern_core"}
-  35: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_crafting_injector 2", displayName: "Инжектор слияния Дракона ×2", icon: "draconicevolution:awakened_crafting_injector"}
+  33: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:glow_berry_custard 2", displayName: "Крем из светящихся ягод ×2", icon: "farmersdelight:glow_berry_custard"}
+  34: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:pink_slime_ingot 2", displayName: "Слиток розовой слизи ×2", icon: "industrialforegoing:pink_slime_ingot"}
+  35: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_2 2", displayName: "Улучшение «Переполнение II» ×2", icon: "sophisticatedbackpacks:stack_upgrade_tier_2"}
   36: {type: MONEY, amount: 8000}
-  37: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_energy_core 1", displayName: "Энергетический контроллер Виверны", icon: "draconicevolution:wyvern_energy_core"}
-  38: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 2", displayName: "Пробуждённый дракониевый слиток ×2", icon: "draconicevolution:awakened_draconium_ingot"}
-  39: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:netherite_backpack 1", displayName: "Незеритовый рюкзак", icon: "sophisticatedbackpacks:netherite_backpack"}
+  37: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:feeding_upgrade 2", displayName: "Улучшение «Кормление» ×2", icon: "sophisticatedbackpacks:feeding_upgrade"}
+  38: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:deposit_upgrade 2", displayName: "Улучшение «Разгрузка» ×2", icon: "sophisticatedbackpacks:deposit_upgrade"}
+  39: {type: COMMAND, command: "/minecraft:give {player} ae2:fluid_storage_cell_16k 2", displayName: "16К МЭ жидкостная ячейка хранения ×2", icon: "ae2:fluid_storage_cell_16k"}
   40: {type: VOIDCOIN, amount: 160}
-  41: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:netherite_knife 1", displayName: "Незеритовый нож", icon: "farmersdelight:netherite_knife"}
-  42: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:basic_crafting_injector 2", displayName: "Базовый инжектор слияния ×2", icon: "draconicevolution:basic_crafting_injector"}
-  43: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_ministrosity_bucket 1", displayName: "Незеритовое Мини-Чудище в ведре", icon: "cataclysm:netherite_ministrosity_bucket"}
+  41: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_hoe 2", displayName: "Мотыга Дракона ×2", icon: "draconicevolution:draconic_hoe"}
+  42: {type: COMMAND, command: "/minecraft:give {player} ae2:formation_core 2", displayName: "Ядро формирования ×2", icon: "ae2:formation_core"}
+  43: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:xp_pump_upgrade 2", displayName: "Улучшение «Помпа опыта» ×2", icon: "sophisticatedbackpacks:xp_pump_upgrade"}
   44: {type: MONEY, amount: 10000}
-  45: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_effigy 1", displayName: "Незеритовое чучело", icon: "cataclysm:netherite_effigy"}
-  46: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_crystal 1", displayName: "Кристалл Хаоса", icon: "draconicevolution:chaos_crystal"}
-  47: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_energy_core 1", displayName: "Энергетический контроллер Хаоса", icon: "draconicevolution:chaotic_energy_core"}
+  45: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_omega_tier 2", displayName: "Улучшение «Переполнение Ω» ×2", icon: "sophisticatedbackpacks:stack_upgrade_omega_tier"}
+  46: {type: COMMAND, command: "/minecraft:give {player} cataclysm:cursium_ingot 2", displayName: "Проклятый слиток ×2", icon: "cataclysm:cursium_ingot"}
+  47: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:smithing_upgrade 2", displayName: "Улучшение «Ковка» ×2", icon: "sophisticatedbackpacks:smithing_upgrade"}
   48: {type: MONEY, amount: 10000}
-  49: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_pickaxe 1", displayName: "Кирка Хаоса", icon: "draconicevolution:chaotic_pickaxe"}
+  49: {type: COMMAND, command: "/minecraft:give {player} mekanism:elite_control_circuit 2", displayName: "Элитная схема управления ×2", icon: "mekanism:elite_control_circuit"}
   50: {type: VOIDCOIN, amount: 200}
-  51: {type: COMMAND, command: "/minecraft:give {player} cataclysm:ignitium_elytra_chestplate 1", displayName: "Игнитовый крылатый нагрудник", icon: "cataclysm:ignitium_elytra_chestplate"}
+  51: {type: COMMAND, command: "/minecraft:give {player} mekanism:advanced_control_circuit 2", displayName: "Продвинутая схема управления ×2", icon: "mekanism:advanced_control_circuit"}
   52: {type: MONEY, amount: 11000}
-  53: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 1", displayName: "Осколок Хаоса", icon: "draconicevolution:chaos_shard"}
-  54: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 1", displayName: "Пробуждённое ядро", icon: "draconicevolution:awakened_core"}
-  55: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_axe 1", displayName: "Топор Хаоса", icon: "draconicevolution:chaotic_axe"}
+  53: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_bow 2", displayName: "Лук Дракона ×2", icon: "draconicevolution:draconic_bow"}
+  54: {type: COMMAND, command: "/minecraft:give {player} cataclysm:amethyst_crab_meat 2", displayName: "Мясо аметистового краба ×2", icon: "cataclysm:amethyst_crab_meat"}
+  55: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:auto_blasting_upgrade 2", displayName: "Улучшение «Автоплавильня» ×2", icon: "sophisticatedbackpacks:auto_blasting_upgrade"}
   56: {type: MONEY, amount: 12000}
-  57: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_hoe 1", displayName: "Мотыга Хаоса", icon: "draconicevolution:chaotic_hoe"}
-  58: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_staff 1", displayName: "Посох силы Хаоса", icon: "draconicevolution:chaotic_staff"}
-  59: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_bow 1", displayName: "Лук Хаоса", icon: "draconicevolution:chaotic_bow"}
+  57: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:module_core 1", displayName: "Ядро модуля", icon: "draconicevolution:module_core"}
+  58: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_crafting_injector 2", displayName: "Инжектор слияния Дракона ×2", icon: "draconicevolution:awakened_crafting_injector"}
+  59: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_draconium_ingot 2", displayName: "Пробуждённый дракониевый слиток ×2", icon: "draconicevolution:awakened_draconium_ingot"}
   60: {type: VOIDCOIN, amount: 240}
-  61: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 1", displayName: "Ядро Хаоса", icon: "draconicevolution:chaotic_core"}
-  62: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_helmet 1", displayName: "Незеритовый лаволазный шлем", icon: "create:netherite_diving_helmet"}
-  63: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_staff 1", displayName: "Посох силы Дракона", icon: "draconicevolution:draconic_staff"}
+  61: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_ministrosity_bucket 1", displayName: "Незеритовое Мини-Чудище в ведре", icon: "cataclysm:netherite_ministrosity_bucket"}
+  62: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crystal_binder 1", displayName: "Связыватель кристаллов", icon: "draconicevolution:crystal_binder"}
+  63: {type: COMMAND, command: "/minecraft:give {player} justhammers:diamond_reinforced_impact_hammer 2", displayName: "Алмазный молот ×2", icon: "justhammers:diamond_reinforced_impact_hammer"}
   64: {type: MONEY, amount: 13000}
-  65: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_crafting_injector 1", displayName: "Инжектор слияния Хаоса", icon: "draconicevolution:chaotic_crafting_injector"}
-  66: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_sword 1", displayName: "Меч Хаоса", icon: "draconicevolution:chaotic_sword"}
-  67: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_energy_core 1", displayName: "Энергетический контроллер Дракона", icon: "draconicevolution:draconic_energy_core"}
+  65: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_tier_4 2", displayName: "Улучшение «Переполнение IV» ×2", icon: "sophisticatedbackpacks:stack_upgrade_tier_4"}
+  66: {type: COMMAND, command: "/minecraft:give {player} ae2:quantum_ring 1", displayName: "МЭ квантовое кольцо", icon: "ae2:quantum_ring"}
+  67: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:basic_crafting_injector 2", displayName: "Базовый инжектор слияния ×2", icon: "draconicevolution:basic_crafting_injector"}
   68: {type: MONEY, amount: 14000}
-  69: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_chestpiece 1", displayName: "Нагрудник Хаоса", icon: "draconicevolution:chaotic_chestpiece"}
+  69: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_energy_core 1", displayName: "Энергетический контроллер Виверны", icon: "draconicevolution:wyvern_energy_core"}
   70: {type: VOIDCOIN, amount: 280}
-  71: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_boots 1", displayName: "Незеритовые лаволазные ботинки", icon: "create:netherite_diving_boots"}
+  71: {type: COMMAND, command: "/minecraft:give {player} cataclysm:netherite_effigy 1", displayName: "Незеритовое чучело", icon: "cataclysm:netherite_effigy"}
   72: {type: MONEY, amount: 15000}
-  73: {type: COMMAND, command: "/minecraft:give {player} amendments:dragon_charge 1", displayName: "Драконий заряд", icon: "amendments:dragon_charge"}
-  74: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_crystal 1", displayName: "Кристалл Хаоса", icon: "draconicevolution:chaos_crystal"}
-  75: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_energy_core 1", displayName: "Энергетический контроллер Хаоса", icon: "draconicevolution:chaotic_energy_core"}
+  73: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:netherite_backpack 1", displayName: "Незеритовый рюкзак", icon: "sophisticatedbackpacks:netherite_backpack"}
+  74: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_ingot 1", displayName: "Дракониевый слиток", icon: "draconicevolution:draconium_ingot"}
+  75: {type: COMMAND, command: "/minecraft:give {player} industrialforegoing:infinity_trident 2", displayName: "Бесконечный трезубец ×2", icon: "industrialforegoing:infinity_trident"}
   76: {type: MONEY, amount: 15000}
-  77: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_pickaxe 1", displayName: "Кирка Хаоса", icon: "draconicevolution:chaotic_pickaxe"}
-  78: {type: COMMAND, command: "/minecraft:give {player} cataclysm:ignitium_elytra_chestplate 1", displayName: "Игнитовый крылатый нагрудник", icon: "cataclysm:ignitium_elytra_chestplate"}
-  79: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaos_shard 1", displayName: "Осколок Хаоса", icon: "draconicevolution:chaos_shard"}
+  77: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:crafting_core 1", displayName: "Ядро слияния", icon: "draconicevolution:crafting_core"}
+  78: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:wyvern_core 1", displayName: "Ядро Виверны", icon: "draconicevolution:wyvern_core"}
+  79: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconium_core 1", displayName: "Ядро Дракона", icon: "draconicevolution:draconium_core"}
   80: {type: VOIDCOIN, amount: 320}
-  81: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_core 1", displayName: "Пробуждённое ядро", icon: "draconicevolution:awakened_core"}
-  82: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_axe 1", displayName: "Топор Хаоса", icon: "draconicevolution:chaotic_axe"}
-  83: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_hoe 1", displayName: "Мотыга Хаоса", icon: "draconicevolution:chaotic_hoe"}
+  81: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:energy_core 1", displayName: "Энергетическое ядро", icon: "draconicevolution:energy_core"}
+  82: {type: COMMAND, command: "/minecraft:give {player} farmersdelight:netherite_knife 1", displayName: "Незеритовый нож", icon: "farmersdelight:netherite_knife"}
+  83: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:module_core 1", displayName: "Ядро модуля", icon: "draconicevolution:module_core"}
   84: {type: MONEY, amount: 17000}
-  85: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_staff 1", displayName: "Посох силы Хаоса", icon: "draconicevolution:chaotic_staff"}
-  86: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_bow 1", displayName: "Лук Хаоса", icon: "draconicevolution:chaotic_bow"}
-  87: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_core 1", displayName: "Ядро Хаоса", icon: "draconicevolution:chaotic_core"}
+  85: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:awakened_crafting_injector 2", displayName: "Инжектор слияния Дракона ×2", icon: "draconicevolution:awakened_crafting_injector"}
+  86: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_axe 1", displayName: "Топор Хаоса", icon: "draconicevolution:chaotic_axe"}
+  87: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_crafting_injector 1", displayName: "Инжектор слияния Хаоса", icon: "draconicevolution:chaotic_crafting_injector"}
   88: {type: MONEY, amount: 18000}
-  89: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_helmet 1", displayName: "Незеритовый лаволазный шлем", icon: "create:netherite_diving_helmet"}
+  89: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_energy_core 1", displayName: "Энергетический контроллер Дракона", icon: "draconicevolution:draconic_energy_core"}
   90: {type: VOIDCOIN, amount: 400}
-  91: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_staff 1", displayName: "Посох силы Дракона", icon: "draconicevolution:draconic_staff"}
+  91: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_sword 1", displayName: "Меч Хаоса", icon: "draconicevolution:chaotic_sword"}
   92: {type: MONEY, amount: 18000}
-  93: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_crafting_injector 1", displayName: "Инжектор слияния Хаоса", icon: "draconicevolution:chaotic_crafting_injector"}
-  94: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_sword 1", displayName: "Меч Хаоса", icon: "draconicevolution:chaotic_sword"}
-  95: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:draconic_energy_core 1", displayName: "Энергетический контроллер Дракона", icon: "draconicevolution:draconic_energy_core"}
+  93: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_boots 1", displayName: "Незеритовые лаволазные ботинки", icon: "create:netherite_diving_boots"}
+  94: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_hoe 1", displayName: "Мотыга Хаоса", icon: "draconicevolution:chaotic_hoe"}
+  95: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_helmet 1", displayName: "Незеритовый лаволазный шлем", icon: "create:netherite_diving_helmet"}
   96: {type: MONEY, amount: 19000}
-  97: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_chestpiece 1", displayName: "Нагрудник Хаоса", icon: "draconicevolution:chaotic_chestpiece"}
-  98: {type: COMMAND, command: "/minecraft:give {player} create:netherite_diving_boots 1", displayName: "Незеритовые лаволазные ботинки", icon: "create:netherite_diving_boots"}
-  99: {type: COMMAND, command: "/minecraft:give {player} amendments:dragon_charge 1", displayName: "Драконий заряд", icon: "amendments:dragon_charge"}
+  97: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_staff 1", displayName: "Посох силы Хаоса", icon: "draconicevolution:chaotic_staff"}
+  98: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_bow 1", displayName: "Лук Хаоса", icon: "draconicevolution:chaotic_bow"}
+  99: {type: COMMAND, command: "/minecraft:give {player} draconicevolution:chaotic_energy_core 1", displayName: "Энергетический контроллер Хаоса", icon: "draconicevolution:chaotic_energy_core"}
   100: {type: VOIDCOIN, amount: 1000}

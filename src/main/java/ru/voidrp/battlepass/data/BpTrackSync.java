@@ -51,6 +51,7 @@ public final class BpTrackSync {
         String seasonName = plugin.getConfig().getString("season-name", data.getSeason());
         body.addProperty("season", seasonName);
         body.addProperty("level", data.getLevel());
+        body.addProperty("prestige", data.getPrestige());
         body.addProperty("xp", data.getXp());
         body.addProperty("xp_per_level", (int) BattlePassData.XP_PER_LEVEL);
         body.addProperty("has_premium", hasPremium);

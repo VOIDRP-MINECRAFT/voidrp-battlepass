@@ -282,6 +282,8 @@ public final class BpProgressListener implements Listener {
                         () -> backendClient.pushProgress(uuid.toString(), nick, ru.voidrp.battlepass.season.Season.currentKey(), finalLevel, finalXp));
             }
         }
+        // Prestige (past level 100) — checked on every gain, not just on a visible level-up.
+        ru.voidrp.battlepass.PrestigeGrant.check(plugin, storage, player);
     }
 
     private void pushProgressAsync(UUID uuid) {

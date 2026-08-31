@@ -37,8 +37,17 @@ VANILLA_EARLY = [
 ]
 
 
+# crafting intermediates — you build WITH these, they're not desirable rewards
+INTERMEDIATE = ("mold", "cast", "press", "plate", "sheet", "coil", "wire", "fitting", "casing",
+                "gearbox", "gear", "rod", "grit", "slurry", "dust", "nugget", "fragment", "chunk",
+                "scrap", "servo", "wafer", "cable", "conduit", "pipe", "dielectric", "compound",
+                "mixture", "solution", "substrate", "filament", "bristle", "sawdust", "pulp",
+                "wireless_", "mechanical_", "raw_", "crushed", "clump", "shard_of")
+
+
 def load_modded_pools():
-    """Modded (non-vanilla) upgrader items with icons, grouped by tier, cheapest first."""
+    """Modded upgrader items with icons, grouped by tier (cheapest first), excluding crafting
+    intermediates. Only rare/epic/legendary — cheap 'common' components make poor rewards."""
     s = SessionLocal()
     try:
         srv = s.execute(select(GameServer).where(GameServer.is_default.is_(True))).scalar_one()
@@ -50,39 +59,41 @@ def load_modded_pools():
         ).scalars().all()
     finally:
         s.close()
-    pools = {"common": [], "rare": [], "epic": [], "legendary": []}
+    pools = {"rare": [], "epic": [], "legendary": []}
     for r in rows:
         if r.item_key.startswith("minecraft:"):
-            continue                                  # keep vanilla for ITEM type only
-        pools.setdefault(r.tier, []).append((r.item_key, r.display_name, int(r.vc_value)))
+            continue                                  # vanilla handled as ITEM
+        if r.tier not in pools:
+            continue                                  # skip 'common' junk tier
+        path = r.item_key.split(":", 1)[-1]
+        if any(k in path for k in INTERMEDIATE):
+            continue                                  # skip crafting intermediates
+        pools[r.tier].append((r.item_key, r.display_name, int(r.vc_value)))
     rng = random.Random(2026)
     for k in pools:
-        pools[k].sort(key=lambda x: x[2])             # by value
-        # light shuffle within value order so same-tier picks vary but stay roughly ordered
+        pools[k].sort(key=lambda x: x[2])
         rng.shuffle(pools[k])
     return pools
 
 
 POOLS = load_modded_pools()
-_cur = {"common": 0, "rare": 0, "epic": 0, "legendary": 0}
+_cur = {"rare": 0, "epic": 0, "legendary": 0}
 
 
 def take(tier):
-    pool = POOLS[tier] or POOLS["rare"] or POOLS["common"]
-    it = pool[_cur[tier] % len(pool)]
-    _cur[tier] = (_cur[tier] + 1)
+    pool = POOLS.get(tier) or POOLS["rare"] or POOLS["epic"]
+    it = pool[_cur.get(tier, 0) % len(pool)]
+    _cur[tier] = _cur.get(tier, 0) + 1
     return it
 
 
-def band(level, premium):
-    """Which reward tier this level pulls from (premium leans one band higher)."""
-    if level <= 20:   base = "common"
-    elif level <= 45: base = "rare"
-    elif level <= 72: base = "epic"
-    else:             base = "legendary"
-    if premium:
-        base = {"common": "rare", "rare": "epic", "epic": "legendary", "legendary": "legendary"}[base]
-    return base
+def band(level):
+    """Reward tier by level. Rare covers most (biggest pool); epic/legendary at the top.
+    Free & premium at the same level draw DIFFERENT items (shared cursor), so premium value
+    comes from x2 counts + the Void Coin milestones, not from exhausting the small epic pool."""
+    if level <= 55:   return "rare"
+    if level <= 85:   return "epic"
+    return "legendary"
 
 
 def esc(s):
@@ -117,7 +128,7 @@ def gen_track(premium):
         elif lvl % 4 == 0:
             r = f"{{type: MONEY, amount: {money_amt(lvl, premium)}}}"
         else:
-            r = modded_reward(band(lvl, premium), premium)
+            r = modded_reward(band(lvl), premium)
         lines.append(f"  {lvl}: {r}")
     return "\n".join(lines)
 
