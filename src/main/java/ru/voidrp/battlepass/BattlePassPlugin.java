@@ -69,6 +69,8 @@ public final class BattlePassPlugin extends JavaPlugin {
         bpQuestsDir.mkdirs();
 
         // ── Init storages ─────────────────────────────────────────────────────
+        // Drop quests whose target mob/block isn't on this server (missing mods).
+        ru.voidrp.battlepass.quest.BpQuestPool.filterAvailable(getLogger());
         storage        = new BattlePassStorage(getDataFolder(), getLogger());
         premiumStorage = new PremiumStorage(premiumDir, getLogger());
         questStorage   = new BpQuestStorage(bpQuestsDir, getLogger());

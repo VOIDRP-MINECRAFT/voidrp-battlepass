@@ -1,9 +1,15 @@
 package ru.voidrp.battlepass.quest;
 
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public final class BpQuestPool {
 
@@ -31,24 +37,79 @@ public final class BpQuestPool {
         FREE_POOL.add(new BpQuestTemplate("market_buy_10", "Покупатель",       "Купить 10 предметов на рынке",   BpQuestType.MARKET_BUY,  "any",              10,  500,  false));
 
         // ── Premium quests ──
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_dragon",       "Охотник на Драконов",    "Убить дракона Ice&Fire",         BpQuestType.KILL, "iceandfire:fire_dragon",        1, 1000, true));
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_ice_dragon",   "Ледяной Охотник",        "Убить ледяного дракона",         BpQuestType.KILL, "iceandfire:ice_dragon",         1, 1000, true));
+        // Modded bosses target L_Ender's Cataclysm (installed). Any target whose mob/block
+        // isn't registered on the server is dropped at startup by filterAvailable().
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_ignis",        "Гроза Пепла",            "Победить Игниса (Cataclysm)",    BpQuestType.KILL, "cataclysm:ignis",                    1, 1000, true));
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_leviathan",    "Морской Титан",          "Победить Левиафана (Cataclysm)", BpQuestType.KILL, "cataclysm:the_leviathan",            1, 1000, true));
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_monstrosity",  "Незеритовый Кошмар",     "Победить Незеритовое Чудовище",  BpQuestType.KILL, "cataclysm:netherite_monstrosity",    1, 1000, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_wither",       "Победитель Визера",      "Победить Визера",                BpQuestType.KILL, "minecraft:wither",              1, 1000, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_elder",        "Убийца Стражника",       "Убить Старшего Стражника",       BpQuestType.KILL, "minecraft:elder_guardian",      1, 1000, true));
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_tf_boss",      "Завоеватель Сумерек",    "Победить нагу TF",               BpQuestType.KILL, "twilightforest:naga",           1, 1000, true));
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_ender_guard",  "Страж Энда",             "Победить Стража Энда (Cataclysm)",BpQuestType.KILL, "cataclysm:ender_guardian",           1, 1000, true));
         PREMIUM_POOL.add(new BpQuestTemplate("mine_debris",       "Охотник за Обломками",   "Добыть 16 ancient debris",       BpQuestType.MINE, "ANCIENT_DEBRIS",               16, 1000, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_mobs_100",     "Армагеддон",             "Убить 100 любых мобов",          BpQuestType.KILL, "any",                         100,  900, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_nether",       "Завоеватель Ада",        "Убить 20 пигменов",              BpQuestType.KILL, "minecraft:piglin",             20,  800, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_endermen",     "Тьма Энда",              "Убить 15 эндерменов",            BpQuestType.KILL, "minecraft:enderman",           15,  800, true));
         PREMIUM_POOL.add(new BpQuestTemplate("mine_emerald",      "Изумрудный путь",        "Добыть 16 изумрудов",            BpQuestType.MINE, "EMERALD_ORE",                  16,  900, true));
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_sea_serpent",  "Морской Ужас",           "Убить морскую змею",             BpQuestType.KILL, "iceandfire:sea_serpent",        1, 1000, true));
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_lich",         "Падение Лича",           "Победить Лича",                  BpQuestType.KILL, "twilightforest:lich",           1, 1000, true));
-        PREMIUM_POOL.add(new BpQuestTemplate("kill_frostmaw",     "Ледяной Великан",        "Победить Фростмо",               BpQuestType.KILL, "mowziesmobs:frostmaw",          1, 1000, true));
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_harbinger",    "Падение Предвестника",   "Победить Предвестника (Cataclysm)",BpQuestType.KILL,"cataclysm:the_harbinger",            1, 1000, true));
+        PREMIUM_POOL.add(new BpQuestTemplate("kill_maledictus",   "Проклятый Зверь",        "Победить Малдиктуса (Cataclysm)",BpQuestType.KILL, "cataclysm:maledictus",               1, 1000, true));
         PREMIUM_POOL.add(new BpQuestTemplate("fish_premium",      "Мастер Рыбной Ловли",    "Поймать 20 рыб",                 BpQuestType.FISH, "ANY",                          20,  800, true));
         PREMIUM_POOL.add(new BpQuestTemplate("kill_ender_dragon", "Конец Света",            "Убить Дракона Конца",            BpQuestType.KILL, "minecraft:ender_dragon",        1, 1000, true));
     }
 
     private BpQuestPool() {}
+
+    /**
+     * Drops any quest whose target isn't available on THIS server — a KILL target whose
+     * entity type isn't registered (e.g. iceandfire / twilightforest / mowziesmobs when the
+     * mod isn't installed) or a MINE/COLLECT material that doesn't exist. Call once on enable
+     * so quests are always completable; future missing mods are handled automatically.
+     */
+    public static void filterAvailable(Logger log) {
+        int removed = prune(FREE_POOL, log) + prune(PREMIUM_POOL, log);
+        if (log != null) {
+            log.info("[BattlePass] Quest pool: " + FREE_POOL.size() + " free / " + PREMIUM_POOL.size()
+                    + " premium available (" + removed + " dropped for missing content).");
+        }
+    }
+
+    private static int prune(List<BpQuestTemplate> pool, Logger log) {
+        int removed = 0;
+        Iterator<BpQuestTemplate> it = pool.iterator();
+        while (it.hasNext()) {
+            BpQuestTemplate t = it.next();
+            if (!targetAvailable(t)) {
+                if (log != null) log.warning("[BattlePass] Quest '" + t.getId() + "' dropped — target unavailable: " + t.getTarget());
+                it.remove();
+                removed++;
+            }
+        }
+        return removed;
+    }
+
+    private static boolean targetAvailable(BpQuestTemplate t) {
+        String target = t.getTarget();
+        if (target == null) return true;
+        String tl = target.trim();
+        if (tl.isEmpty() || tl.equalsIgnoreCase("any")) return true;   // wildcard quests always fine
+        switch (t.getType()) {
+            case KILL: {
+                // Namespaced entity key ("namespace:id"); default namespace = minecraft.
+                NamespacedKey key = tl.contains(":") ? NamespacedKey.fromString(tl.toLowerCase())
+                                                     : NamespacedKey.minecraft(tl.toLowerCase());
+                if (key == null) return false;
+                try {
+                    return Registry.ENTITY_TYPE.get(key) != null;
+                } catch (Throwable ignored) {
+                    return false;
+                }
+            }
+            case MINE:
+            case COLLECT:
+                return Material.matchMaterial(tl) != null;   // Bukkit material enum / vanilla block
+            default:
+                return true;   // FISH / MARKET_* have no concrete target
+        }
+    }
 
     /**
      * Selects {@code count} templates from the given pool using the given seed.
