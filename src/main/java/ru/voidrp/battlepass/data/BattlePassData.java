@@ -5,7 +5,8 @@ import java.util.Set;
 
 public final class BattlePassData {
 
-    public static final int MAX_LEVEL = 100;
+    /** Level cap. Mutable so the active season (backend-managed) can raise/lower it; default 100. */
+    public static int MAX_LEVEL = 100;
     public static final long XP_PER_LEVEL = 10_000L;
 
     private String season;

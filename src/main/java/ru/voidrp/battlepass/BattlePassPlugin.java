@@ -92,6 +92,16 @@ public final class BattlePassPlugin extends JavaPlugin {
         final BackendSyncClient finalBackendClient = backendClient;
         this.backendClient = backendClient;
 
+        // Season config (dates/level-cap/name) and rewards are admin-managed on the backend.
+        // Apply the active season first (so Season.currentKey() is right), then reload rewards
+        // for that key. Both fall back to config.yml / rewards.yml when the backend is down.
+        if (backendClient != null) {
+            applySeasonFromBackend();
+            seasonRewards.setBackend(backendClient);
+            seasonRewards.reload();
+            lastKnownSeason = Season.currentKey();
+        }
+
         // ── Vault ─────────────────────────────────────────────────────────────
         economy = setupEconomy();
         if (economy == null) {
@@ -193,6 +203,30 @@ public final class BattlePassPlugin extends JavaPlugin {
         if (storage != null) storage.saveAll();
         if (questStorage != null) questStorage.saveAll();
         getLogger().info("[BattlePass] VoidRp Battle Pass disabled — all data saved.");
+    }
+
+    /**
+     * Pull the active season (key/name/dates/level-cap) from the backend and configure the
+     * plugin from it. No-op (keeps config.yml values) if the backend is unreachable or has
+     * no active season. Also re-fetches rewards for the (possibly new) season key.
+     */
+    public void applySeasonFromBackend() {
+        if (backendClient == null || !backendClient.isConfigured()) return;
+        com.google.gson.JsonObject s = backendClient.fetchActiveSeason();
+        if (s == null) return;
+        try {
+            String key   = s.get("season_key").getAsString();
+            String name  = s.has("name") && !s.get("name").isJsonNull() ? s.get("name").getAsString() : null;
+            LocalDate st = LocalDate.parse(s.get("start_date").getAsString());
+            LocalDate en = LocalDate.parse(s.get("end_date").getAsString());
+            int maxLevel = s.has("max_level") && !s.get("max_level").isJsonNull() ? s.get("max_level").getAsInt() : 100;
+            Season.configure(key, name, st, en);
+            ru.voidrp.battlepass.data.BattlePassData.MAX_LEVEL = Math.max(1, maxLevel);
+            getLogger().info("[BattlePass] Active season from backend: " + name + " (" + key
+                    + ", " + st + "→" + en + ", cap " + maxLevel + ").");
+        } catch (Exception e) {
+            getLogger().warning("[BattlePass] Failed to apply backend season: " + e.getMessage());
+        }
     }
 
     private void addXpSafe(Player player, long amount) {

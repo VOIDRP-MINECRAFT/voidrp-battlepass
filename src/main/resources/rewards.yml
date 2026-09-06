@@ -7,7 +7,7 @@ free:
   3: {type: COMMAND, command: "/minecraft:give {player} immersiveengineering:toolupgrade_revolver_electro 1", displayName: "Электронный усилитель", icon: "immersiveengineering:toolupgrade_revolver_electro"}
   4: {type: MONEY, amount: 1500}
   5: {type: ITEM, material: COAL, count: 32, displayName: "Уголь ×32", icon: "minecraft:coal"}
-  6: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:survival_infinity_upgrade 1", displayName: "Улучшение «Бесконечность»", icon: "sophisticatedbackpacks:survival_infinity_upgrade"}
+  6: {type: ITEM, material: DIAMOND, count: 6, displayName: "Алмаз ×6", icon: "minecraft:diamond"}
   7: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:pump_upgrade 1", displayName: "Улучшение «Помпа»", icon: "sophisticatedbackpacks:pump_upgrade"}
   8: {type: ITEM, material: IRON_INGOT, count: 16, displayName: "Железный слиток ×16", icon: "minecraft:iron_ingot"}
   9: {type: COMMAND, command: "/minecraft:give {player} sophisticatedbackpacks:stack_upgrade_starter_tier 1", displayName: "Улучшение «Переполнение 0»", icon: "sophisticatedbackpacks:stack_upgrade_starter_tier"}

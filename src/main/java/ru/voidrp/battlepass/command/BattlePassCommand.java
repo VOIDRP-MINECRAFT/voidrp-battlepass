@@ -161,8 +161,15 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
             case "info" -> handleAdminInfo(sender, args);
             case "season" -> handleAdminSeason(sender, args);
             case "reload" -> {
+                if (plugin instanceof ru.voidrp.battlepass.BattlePassPlugin bp) {
+                    bp.applySeasonFromBackend();   // pick up active season / dates / level cap
+                }
                 seasonRewards.reload();
-                sender.sendMessage("§aRewards перезагружены.");
+                sender.sendMessage("§aСезон «" + ru.voidrp.battlepass.season.Season.getName()
+                        + "» (" + ru.voidrp.battlepass.season.Season.currentKey() + ", кап "
+                        + ru.voidrp.battlepass.data.BattlePassData.MAX_LEVEL + ") — награды: "
+                        + seasonRewards.getAllFreeRewards().size() + " free / "
+                        + seasonRewards.getAllPremiumRewards().size() + " premium.");
             }
             case "syncbackend" -> handleSyncBackend(sender, args);
             default -> sendAdminHelp(sender);

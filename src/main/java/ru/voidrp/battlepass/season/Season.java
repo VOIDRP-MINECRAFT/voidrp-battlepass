@@ -11,24 +11,39 @@ public final class Season {
 
     private static LocalDate startDate = null;
     private static LocalDate endDate   = null;
+    private static String    key       = null;   // stable storage key (backend-managed)
+    private static String    name      = null;   // display name (backend-managed)
 
     private Season() {}
 
-    /** Called once on plugin load with values from config.yml. */
+    /** Config.yml fallback: key is derived from the start date. */
     public static void configure(LocalDate start, LocalDate end) {
+        startDate = start;
+        endDate   = end;
+        key       = null;   // derive from start date
+    }
+
+    /** Backend-managed season: explicit stable key + name + dates (overrides config.yml). */
+    public static void configure(String seasonKey, String displayName, LocalDate start, LocalDate end) {
+        key       = seasonKey;
+        name      = displayName;
         startDate = start;
         endDate   = end;
     }
 
     /**
      * Returns the season storage key.
-     * If season-start is configured returns "yyyy-MM-dd" of start date;
+     * Uses the backend-provided key if set; otherwise "yyyy-MM-dd" of the start date;
      * otherwise falls back to the current "yyyy-MM".
      */
     public static String currentKey() {
+        if (key != null && !key.isBlank()) return key;
         return startDate != null ? startDate.format(KEY_FMT)
                                  : LocalDate.now().format(MONO_FMT);
     }
+
+    /** Display name of the active season, or null when unknown (GUI falls back to config). */
+    public static String getName() { return name; }
 
     /** Returns how many days remain until the configured end date (0 if already past). */
     public static int daysUntilReset() {

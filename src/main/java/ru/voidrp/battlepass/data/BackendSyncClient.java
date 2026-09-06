@@ -225,6 +225,56 @@ public final class BackendSyncClient {
         }
     }
 
+    /**
+     * Fetch the admin-edited reward table for a season. Blocking, best-effort.
+     * @return the response object with {@code free} / {@code premium} maps, or {@code null} on any error.
+     */
+    public JsonObject fetchRewards(String season) {
+        try {
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/battlepass/rewards?season="
+                            + java.net.URLEncoder.encode(season, java.nio.charset.StandardCharsets.UTF_8)))
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .GET())
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() != 200) {
+                log.warning("[BattlePass] Reward fetch returned " + resp.statusCode() + " for season " + season);
+                return null;
+            }
+            return JsonParser.parseString(resp.body()).getAsJsonObject();
+        } catch (Exception e) {
+            log.warning("[BattlePass] Reward fetch failed for season " + season + ": " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Fetch the active season config (key/name/dates/max_level) for this server. Blocking, best-effort.
+     * @return the season object, or {@code null} if none active / on any error.
+     */
+    public JsonObject fetchActiveSeason() {
+        try {
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/battlepass/season"))
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .GET())
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() == 404) return null;   // no active season → keep config.yml
+            if (resp.statusCode() != 200) {
+                log.warning("[BattlePass] Season fetch returned " + resp.statusCode());
+                return null;
+            }
+            return JsonParser.parseString(resp.body()).getAsJsonObject();
+        } catch (Exception e) {
+            log.warning("[BattlePass] Season fetch failed: " + e.getMessage());
+            return null;
+        }
+    }
+
     public boolean isConfigured() {
         return gameAuthSecret != null && !gameAuthSecret.isBlank();
     }

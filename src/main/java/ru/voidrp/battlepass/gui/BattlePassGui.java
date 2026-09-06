@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class BattlePassGui {
 
     private static final int LEVELS_PER_PAGE = 9;
-    private static final int TOTAL_LEVELS = BattlePassData.MAX_LEVEL;
+    // Level cap is read live from BattlePassData.MAX_LEVEL (the active season can change it).
 
     /** Tracks which page each player currently has open. */
     public static final ConcurrentHashMap<UUID, Integer> PLAYER_PAGE = new ConcurrentHashMap<>();
@@ -53,17 +53,23 @@ public final class BattlePassGui {
         open(player, page);
     }
 
+    /** Live display name: the active season's name (backend) if set, else the config value. */
+    private String displayName() {
+        String n = Season.getName();
+        return (n != null && !n.isBlank()) ? n : seasonDisplayName;
+    }
+
     public void open(Player player, int page) {
-        String title = "§6§l✦ Battle Pass §7— §e" + seasonDisplayName;
+        String title = "§6§l✦ Battle Pass §7— §e" + displayName();
         Inventory inv = Bukkit.createInventory(null, 54, title);
 
         BattlePassData data = storage.get(player.getUniqueId());
         boolean hasPremium = premiumStorage.hasPremium(player.getUniqueId());
-        int totalPages = (int) Math.ceil((double) TOTAL_LEVELS / LEVELS_PER_PAGE);
+        int totalPages = (int) Math.ceil((double) BattlePassData.MAX_LEVEL / LEVELS_PER_PAGE);
         int clampedPage = Math.max(0, Math.min(page, totalPages - 1));
 
         int firstLevel = clampedPage * LEVELS_PER_PAGE + 1;
-        int lastLevel = Math.min(firstLevel + LEVELS_PER_PAGE - 1, TOTAL_LEVELS);
+        int lastLevel = Math.min(firstLevel + LEVELS_PER_PAGE - 1, BattlePassData.MAX_LEVEL);
 
         // ── Row 0: season info (0-2), XP info (3-5), premium status (6-8) ──────
 
@@ -71,7 +77,7 @@ public final class BattlePassGui {
         String season = Season.currentKey();
         ItemStack seasonItem = new ItemStack(Material.CLOCK);
         ItemMeta seasonMeta = seasonItem.getItemMeta();
-        seasonMeta.setDisplayName("§6✦ " + seasonDisplayName);
+        seasonMeta.setDisplayName("§6✦ " + displayName());
         List<String> seasonLore = new ArrayList<>();
         seasonLore.add("§7Сезон: §e" + season);
         LocalDate endDate = Season.getEndDate();
@@ -152,7 +158,7 @@ public final class BattlePassGui {
 
         for (int i = 0; i < LEVELS_PER_PAGE; i++) {
             int lvl = firstLevel + i;
-            if (lvl > TOTAL_LEVELS) break;
+            if (lvl > BattlePassData.MAX_LEVEL) break;
 
             // Row 1 (slots 9-17): level indicators
             Material indicatorMat;
