@@ -7,7 +7,12 @@ public final class BattlePassData {
 
     /** Level cap. Mutable so the active season (backend-managed) can raise/lower it; default 100. */
     public static int MAX_LEVEL = 100;
-    public static final long XP_PER_LEVEL = 10_000L;
+    /**
+     * XP per level. Mutable, read from {@code xp-per-level} in config.yml — a longer season
+     * needs a shorter step or the cap is unreachable: with the 8000/day grind cap plus daily
+     * quests a player earns ~1.4M XP over a 90-day season, which is only ~140 levels at 10k.
+     */
+    public static long XP_PER_LEVEL = 10_000L;
 
     private String season;
     private long xp;

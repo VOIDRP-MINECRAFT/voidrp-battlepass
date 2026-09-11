@@ -95,6 +95,7 @@ public final class BattlePassPlugin extends JavaPlugin {
         // Season config (dates/level-cap/name) and rewards are admin-managed on the backend.
         // Apply the active season first (so Season.currentKey() is right), then reload rewards
         // for that key. Both fall back to config.yml / rewards.yml when the backend is down.
+        applyXpPerLevel();
         if (backendClient != null) {
             applySeasonFromBackend();
             seasonRewards.setBackend(backendClient);
@@ -210,6 +211,13 @@ public final class BattlePassPlugin extends JavaPlugin {
      * plugin from it. No-op (keeps config.yml values) if the backend is unreachable or has
      * no active season. Also re-fetches rewards for the (possibly new) season key.
      */
+    /** Applies {@code xp-per-level} from config.yml (default 10000 = historical behaviour). */
+    public void applyXpPerLevel() {
+        long xpPerLevel = getConfig().getLong("xp-per-level", 10_000L);
+        ru.voidrp.battlepass.data.BattlePassData.XP_PER_LEVEL = Math.max(1L, xpPerLevel);
+        getLogger().info("[BattlePass] XP per level: " + ru.voidrp.battlepass.data.BattlePassData.XP_PER_LEVEL);
+    }
+
     public void applySeasonFromBackend() {
         if (backendClient == null || !backendClient.isConfigured()) return;
         com.google.gson.JsonObject s = backendClient.fetchActiveSeason();

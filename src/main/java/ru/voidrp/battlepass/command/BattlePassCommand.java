@@ -162,6 +162,8 @@ public final class BattlePassCommand implements CommandExecutor, TabCompleter {
             case "season" -> handleAdminSeason(sender, args);
             case "reload" -> {
                 if (plugin instanceof ru.voidrp.battlepass.BattlePassPlugin bp) {
+                    bp.reloadConfig();             // pick up xp-per-level edits without a restart
+                    bp.applyXpPerLevel();
                     bp.applySeasonFromBackend();   // pick up active season / dates / level cap
                 }
                 seasonRewards.reload();
