@@ -30,16 +30,19 @@ public final class BpGuiListener implements Listener {
     private final PremiumStorage premiumStorage;
     private final SeasonRewards seasonRewards;
     private final BpProgressListener progressListener;
+    private final RewardClaimService claims;
 
     public BpGuiListener(BattlePassGui battlePassGui, BpQuestGui questGui,
                          BattlePassStorage storage, PremiumStorage premiumStorage,
-                         SeasonRewards seasonRewards, BpProgressListener progressListener) {
+                         SeasonRewards seasonRewards, BpProgressListener progressListener,
+                         RewardClaimService claims) {
         this.battlePassGui = battlePassGui;
         this.questGui = questGui;
         this.storage = storage;
         this.premiumStorage = premiumStorage;
         this.seasonRewards = seasonRewards;
         this.progressListener = progressListener;
+        this.claims = claims;
     }
 
     @EventHandler
@@ -50,6 +53,9 @@ public final class BpGuiListener implements Listener {
         if (title.startsWith("§6§l✦ Battle Pass")) {
             event.setCancelled(true);
             handleBattlePassClick(player, event.getRawSlot());
+        } else if (title.equals(ru.voidrp.battlepass.gui.BpChoiceGui.TITLE)) {
+            event.setCancelled(true);
+            handleChoiceClick(player, event.getRawSlot());
         } else if (title.equals("§b§l⭐ Квесты Battle Pass")) {
             event.setCancelled(true);
             handleQuestGuiClick(player, event.getRawSlot());
@@ -62,6 +68,8 @@ public final class BpGuiListener implements Listener {
         String title = event.getView().getTitle();
         if (title.startsWith("§6§l✦ Battle Pass")) {
             BattlePassGui.PLAYER_PAGE.remove(player.getUniqueId());
+        } else if (title.equals(ru.voidrp.battlepass.gui.BpChoiceGui.TITLE)) {
+            ru.voidrp.battlepass.gui.BpChoiceGui.PENDING.remove(player.getUniqueId());
         }
     }
 
@@ -150,51 +158,39 @@ public final class BpGuiListener implements Listener {
     }
 
     private void tryClaimFree(Player player, int level) {
-        UUID uuid = player.getUniqueId();
-        BattlePassData data = storage.get(uuid);
-        if (data.getLevel() < level) {
-            player.sendMessage("§c✦ Необходим уровень §e" + level + " §cдля получения этой награды.");
-            return;
-        }
-        if (data.isFreeClaimed(level)) {
-            player.sendMessage("§c✦ Эта награда уже получена.");
-            return;
-        }
-        BpReward reward = seasonRewards.getFreeReward(level);
-        if (reward == null) {
-            player.sendMessage("§c✦ Нет награды для этого уровня.");
-            return;
-        }
-        data.claimFree(level);
-        storage.save(uuid);
-        progressListener.giveReward(player, reward);
-        battlePassGui.open(player, BattlePassGui.PLAYER_PAGE.getOrDefault(uuid, 0));
+        tryClaim(player, false, level);
     }
 
     private void tryClaimPremium(Player player, int level) {
+        tryClaim(player, true, level);
+    }
+
+    private void tryClaim(Player player, boolean premium, int level) {
+        int page = BattlePassGui.PLAYER_PAGE.getOrDefault(player.getUniqueId(), 0);
+        switch (claims.claim(player, premium, level, null)) {
+            case NEED_CHOICE -> ru.voidrp.battlepass.gui.BpChoiceGui.open(
+                    player, claims.rewardAt(premium, level), premium, level, page);
+            case OK -> battlePassGui.open(player, page);
+            case FAILED -> { }
+        }
+    }
+
+    private void handleChoiceClick(Player player, int slot) {
         UUID uuid = player.getUniqueId();
-        if (!premiumStorage.hasPremium(uuid)) {
-            player.sendMessage("§c✦ Требуется Premium для получения этой награды.");
+        var pending = ru.voidrp.battlepass.gui.BpChoiceGui.PENDING.get(uuid);
+        if (pending == null) { player.closeInventory(); return; }
+        if (slot == ru.voidrp.battlepass.gui.BpChoiceGui.BACK_SLOT) {
+            ru.voidrp.battlepass.gui.BpChoiceGui.PENDING.remove(uuid);
+            battlePassGui.open(player, pending.page());
             return;
         }
-        BattlePassData data = storage.get(uuid);
-        if (data.getLevel() < level) {
-            player.sendMessage("§c✦ Необходим уровень §e" + level + " §cдля получения этой награды.");
-            return;
-        }
-        if (data.isPremiumClaimed(level)) {
-            player.sendMessage("§c✦ Эта Premium награда уже получена.");
-            return;
-        }
-        BpReward reward = seasonRewards.getPremiumReward(level);
-        if (reward == null) {
-            player.sendMessage("§c✦ Нет Premium награды для этого уровня.");
-            return;
-        }
-        data.claimPremium(level);
-        storage.save(uuid);
-        progressListener.giveReward(player, reward);
-        battlePassGui.open(player, BattlePassGui.PLAYER_PAGE.getOrDefault(uuid, 0));
+        BpReward reward = claims.rewardAt(pending.premium(), pending.level());
+        if (reward == null) { player.closeInventory(); return; }
+        int option = ru.voidrp.battlepass.gui.BpChoiceGui.optionAt(slot, reward.getOptions().size());
+        if (option < 0) return;
+        ru.voidrp.battlepass.gui.BpChoiceGui.PENDING.remove(uuid);
+        claims.claim(player, pending.premium(), pending.level(), option);
+        battlePassGui.open(player, pending.page());
     }
 
     private void handleQuestGuiClick(Player player, int slot) {

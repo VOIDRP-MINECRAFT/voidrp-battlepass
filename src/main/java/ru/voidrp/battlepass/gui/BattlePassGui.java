@@ -106,6 +106,12 @@ public final class BattlePassGui {
         if (level < BattlePassData.MAX_LEVEL) {
             xpLore.add("§7Прогресс: §e" + xpInLevel + "§7/§e" + BattlePassData.XP_PER_LEVEL + " XP");
             xpLore.add("§7До следующего: §e" + toNext + " XP");
+            ru.voidrp.battlepass.season.ZoneGates.Gate gate = ru.voidrp.battlepass.season.ZoneGates.firstClosed(player.getUniqueId());
+            if (gate != null) {
+                xpLore.add(" ");
+                xpLore.add("§6🔒 Граница зоны: уровень " + gate.level());
+                xpLore.add("§7Дальше — после §6" + gate.label());
+            }
         } else {
             xpLore.add("§6✦ §aМаксимальный уровень!");
         }
@@ -178,7 +184,7 @@ public final class BattlePassGui {
             if (freeReward != null) {
                 boolean reachable = playerLevel >= lvl;
                 boolean claimed = data.isFreeClaimed(lvl);
-                inv.setItem(18 + i, buildRewardItem(freeReward, lvl, reachable, claimed, false));
+                inv.setItem(18 + i, buildRewardItem(player, freeReward, lvl, reachable, claimed, false));
             } else {
                 inv.setItem(18 + i, named(Material.GRAY_STAINED_GLASS_PANE, "§8—"));
             }
@@ -189,7 +195,7 @@ public final class BattlePassGui {
                 boolean reachable = playerLevel >= lvl;
                 boolean claimed = data.isPremiumClaimed(lvl);
                 if (hasPremium || claimed) {
-                    inv.setItem(27 + i, buildRewardItem(premReward, lvl, reachable, claimed, true));
+                    inv.setItem(27 + i, buildRewardItem(player, premReward, lvl, reachable, claimed, true));
                 } else {
                     ItemStack locked = new ItemStack(Material.RED_STAINED_GLASS_PANE);
                     ItemMeta lm = locked.getItemMeta();
@@ -272,15 +278,18 @@ public final class BattlePassGui {
         PLAYER_PAGE.put(player.getUniqueId(), clampedPage);
     }
 
-    private ItemStack buildRewardItem(BpReward reward, int level, boolean reachable, boolean claimed, boolean isPremium) {
-        Material mat = rewardIconMaterial(reward);
-        ItemStack item = new ItemStack(mat);
+    private ItemStack buildRewardItem(Player player, BpReward reward, int level, boolean reachable, boolean claimed, boolean isPremium) {
+        ru.voidrp.battlepass.season.ZoneGates.Gate gate = claimed ? null
+                : ru.voidrp.battlepass.season.ZoneGates.blocking(player.getUniqueId(), level);
+        ItemStack item = new ItemStack(gate != null ? Material.IRON_BARS : RewardText.icon(reward));
         ItemMeta meta = item.getItemMeta();
 
         String trackPrefix = isPremium ? "§b[Premium] " : "§a[Free] ";
         String suffix;
         if (claimed) {
             suffix = "§m§7Уровень " + level + " §a✔";
+        } else if (gate != null) {
+            suffix = "§7Уровень " + level + " §6🔒";
         } else if (reachable) {
             suffix = "§aУровень " + level + " §7— §eНажми для получения!";
         } else {
@@ -288,43 +297,18 @@ public final class BattlePassGui {
         }
         meta.setDisplayName(trackPrefix + suffix);
 
-        List<String> lore = buildRewardLore(reward, claimed);
+        List<String> lore = new ArrayList<>(RewardText.lore(reward));
+        if (gate != null) {
+            lore.add(" ");
+            lore.add("§6🔒 Зона закрыта: нужна §e" + gate.label());
+        } else if (!claimed && reachable && reward.getType() == ru.voidrp.battlepass.season.BpRewardType.CHOICE) {
+            lore.add(" ");
+            lore.add("§eНажми, чтобы выбрать");
+        }
+        if (claimed) lore.add("§a§lПолучено!");
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
-    }
-
-    private List<String> buildRewardLore(BpReward reward, boolean claimed) {
-        List<String> lore = new ArrayList<>();
-        switch (reward.getType()) {
-            case MONEY -> lore.add("§6💰 " + (long) reward.getAmount() + " монет");
-            case EXP -> lore.add("§a✨ " + (int) reward.getAmount() + " опыта");
-            case ITEM -> lore.add("§b📦 " + reward.getDisplayName()
-                    + (reward.getCount() > 1 ? "" : ""));
-            case COMMAND -> lore.add("§d🎁 " + (reward.getDisplayName() != null ? reward.getDisplayName() : "Особая награда"));
-            case VOIDCOIN -> lore.add("§5◆ " + (long) reward.getAmount() + " Void Coin §7(премиум-валюта)");
-        }
-        if (claimed) lore.add("§a§lПолучено!");
-        return lore;
-    }
-
-    private Material rewardIconMaterial(BpReward reward) {
-        return switch (reward.getType()) {
-            case MONEY -> Material.GOLD_NUGGET;
-            case EXP -> Material.EXPERIENCE_BOTTLE;
-            case ITEM -> {
-                if (reward.getMaterial() != null) {
-                    try {
-                        yield Material.valueOf(reward.getMaterial().toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        yield Material.BOOK;
-                    }
-                }
-                yield Material.BOOK;
-            }
-            case COMMAND -> Material.CHEST;
-            case VOIDCOIN -> Material.AMETHYST_SHARD;
-        };
     }
 
     private ItemStack named(Material mat, String name) {

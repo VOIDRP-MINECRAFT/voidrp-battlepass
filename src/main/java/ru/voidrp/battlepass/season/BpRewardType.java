@@ -5,5 +5,7 @@ public enum BpRewardType {
     EXP,
     ITEM,
     COMMAND,
-    VOIDCOIN
+    VOIDCOIN,
+    /** Player picks one of {@link BpReward#getOptions()}. */
+    CHOICE
 }

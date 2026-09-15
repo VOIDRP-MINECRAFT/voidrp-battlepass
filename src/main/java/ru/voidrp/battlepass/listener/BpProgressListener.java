@@ -90,6 +90,7 @@ public final class BpProgressListener implements Listener {
         String name = player.getName();
         if (plugin == null) return;
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            ru.voidrp.battlepass.season.ZoneGates.refresh(backendClient, uuid);
             premiumStorage.syncFromBackend(uuid, name);
             pushProgressAsync(uuid);
             // Nudge: unclaimed rewards waiting → drives opening /bp.
@@ -117,6 +118,7 @@ public final class BpProgressListener implements Listener {
         int lvl = data.getLevel();
         int n = 0;
         for (int L = 1; L <= lvl; L++) {
+            if (ru.voidrp.battlepass.season.ZoneGates.blocking(uuid, L) != null) break;
             if (seasonRewards.getFreeReward(L) != null && !data.isFreeClaimed(L)) n++;
             if (prem && seasonRewards.getPremiumReward(L) != null && !data.isPremiumClaimed(L)) n++;
         }
@@ -126,6 +128,7 @@ public final class BpProgressListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         premiumStorage.evict(e.getPlayer().getUniqueId());
+        ru.voidrp.battlepass.season.ZoneGates.forget(e.getPlayer().getUniqueId());
     }
 
     // ── Entity Death ──────────────────────────────────────────────────────────
@@ -298,6 +301,7 @@ public final class BpProgressListener implements Listener {
         amount = ru.voidrp.battlepass.NationResearchBonus.apply(player, amount);
         int oldLevel = storage.addXp(uuid, amount);
         BattlePassData data = storage.get(uuid);
+        ru.voidrp.battlepass.season.ZoneGates.noticeIfCapped(player, data);
         int newLevel = data.getLevel();
         if (newLevel > oldLevel) {
             for (int lvl = oldLevel + 1; lvl <= newLevel; lvl++) {
@@ -383,16 +387,22 @@ public final class BpProgressListener implements Listener {
         switch (reward.getType()) {
             case MONEY -> {
                 if (economy != null) {
-                    economy.depositPlayer(player, reward.getAmount());
-                    player.sendMessage("§6💰 Получено §e" + (long) reward.getAmount() + " монет§6!");
+                    double money = reward.rollAmount();
+                    economy.depositPlayer(player, money);
+                    player.sendMessage("§6💰 Получено §e" + (long) money + " монет§6!");
                 }
             }
             case EXP -> {
-                player.giveExp((int) reward.getAmount());
-                player.sendMessage("§a✨ Получено §e" + (int) reward.getAmount() + " опыта§a!");
+                int exp = (int) reward.rollAmount();
+                player.giveExp(exp);
+                player.sendMessage("§a✨ Получено §e" + exp + " опыта§a!");
+            }
+            case CHOICE -> {
+                // Choices are resolved by RewardClaimService (the player picks an option first).
+                plugin.getLogger().warning("[BattlePass] giveReward called with an unresolved choice for " + player.getName());
             }
             case VOIDCOIN -> {
-                long vc = (long) reward.getAmount();
+                long vc = (long) reward.rollAmount();
                 // granted via the game-sync admin command (runs as console → has permission)
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "vrgs voidcoin " + player.getName() + " " + vc);
                 player.sendMessage("§5◆ Получено §d" + vc + " Void Coin§5!");
@@ -405,7 +415,7 @@ public final class BpProgressListener implements Listener {
                     plugin.getLogger().warning("[BattlePass] Unknown material '" + reward.getMaterial() + "' — giving PAPER instead.");
                     mat = org.bukkit.Material.PAPER;
                 }
-                org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(mat, Math.max(1, reward.getCount()));
+                org.bukkit.inventory.ItemStack item = new org.bukkit.inventory.ItemStack(mat, Math.max(1, reward.rollCount()));
                 var leftover = player.getInventory().addItem(item);
                 if (!leftover.isEmpty()) {
                     leftover.values().forEach(drop -> player.getWorld().dropItemNaturally(player.getLocation(), drop));
@@ -414,12 +424,16 @@ public final class BpProgressListener implements Listener {
                 player.sendMessage("§b📦 Получено: §f" + (reward.getDisplayName() != null ? reward.getDisplayName() : mat.name()) + "§b!");
             }
             case COMMAND -> {
-                String cmd = reward.getCommand().replace("{player}", player.getName());
+                int rolled = Math.max(1, reward.rollCount());
+                String cmd = reward.getCommand().replace("{player}", player.getName())
+                        .replace("{count}", String.valueOf(rolled));
                 if (cmd.startsWith("/")) cmd = cmd.substring(1);
                 plugin.getLogger().info("[BattlePass] Reward command for " + player.getName() + ": " + cmd);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
-                player.sendMessage("§d🎁 Получена особая награда: §f"
-                        + (reward.getDisplayName() != null ? reward.getDisplayName() : "Предмет") + "§d!");
+                String name = reward.getDisplayName() != null ? reward.getDisplayName() : "Предмет";
+                // A random count isn't in the stored name ("Латунь ×32–48") — show what actually dropped.
+                if (reward.hasCountRange()) name = name.replaceAll("\\s*×\\s*[\\d–-]+$", "") + " ×" + rolled;
+                player.sendMessage("§d🎁 Получена награда: §f" + name + "§d!");
             }
         }
     }

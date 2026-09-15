@@ -41,10 +41,19 @@ public final class BattlePassStorage {
                 .computeIfAbsent(uuid, id -> load(id, season));
     }
 
-    /** Adds XP for the player, returns old level so caller can detect level-up. */
+    /**
+     * Adds XP for the player, returns old level so caller can detect level-up.
+     * XP stops at a closed zone gate (see {@link ru.voidrp.battlepass.season.ZoneGates}); XP
+     * already above it is kept, it just doesn't grow until the gate opens.
+     */
     public int addXp(UUID uuid, long amount) {
         BattlePassData data = get(uuid);
         int oldLevel = data.getLevel();
+        long cap = ru.voidrp.battlepass.season.ZoneGates.xpCap(uuid);
+        if (amount > 0 && cap != Long.MAX_VALUE) {
+            if (data.getXp() >= cap) return oldLevel;
+            amount = Math.min(amount, cap - data.getXp());
+        }
         data.addXp(amount);
         return oldLevel;
     }

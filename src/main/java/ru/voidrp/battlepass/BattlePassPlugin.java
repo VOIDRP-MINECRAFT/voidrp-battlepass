@@ -121,8 +121,10 @@ public final class BattlePassPlugin extends JavaPlugin {
         if (finalBackendClient != null) progressListener.setBackendClient(finalBackendClient);
 
         getServer().getPluginManager().registerEvents(progressListener, this);
+        ru.voidrp.battlepass.listener.RewardClaimService claimService =
+                new ru.voidrp.battlepass.listener.RewardClaimService(storage, premiumStorage, seasonRewards, progressListener);
         getServer().getPluginManager().registerEvents(
-                new BpGuiListener(battlePassGui, questGui, storage, premiumStorage, seasonRewards, progressListener), this);
+                new BpGuiListener(battlePassGui, questGui, storage, premiumStorage, seasonRewards, progressListener, claimService), this);
         getServer().getPluginManager().registerEvents(
                 new BpNpcListener(battlePassGui, getConfig().getStringList("battlepass-npc-names")), this);
         getServer().getPluginManager().registerEvents(
@@ -133,6 +135,7 @@ public final class BattlePassPlugin extends JavaPlugin {
         cmd.setPlugin(this);
         cmd.setBackendClient(finalBackendClient);
         cmd.setProgressListener(progressListener);
+        cmd.setClaimService(claimService);
         attachProxy("battlepass", cmd);
         attachProxy("bp", cmd);
         attachProxy("баттлпасс", cmd);
@@ -153,6 +156,8 @@ public final class BattlePassPlugin extends JavaPlugin {
             long periodTicks = 20L * 60 * 3; // 3 minutes
             getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
                 for (org.bukkit.entity.Player p : getServer().getOnlinePlayers()) {
+                    // epochs change while playing — keep zone gates current
+                    ru.voidrp.battlepass.season.ZoneGates.refresh(finalBackendClient, p.getUniqueId());
                     ru.voidrp.battlepass.data.BattlePassData d = storage.get(p.getUniqueId());
                     finalBackendClient.pushProgress(p.getUniqueId().toString(), p.getName(), Season.currentKey(), d.getLevel(), d.getXp(), d.getPrestige());
                     ru.voidrp.battlepass.data.BpTrackSync.push(this, storage, premiumStorage, seasonRewards, finalBackendClient, p);
@@ -230,6 +235,13 @@ public final class BattlePassPlugin extends JavaPlugin {
             int maxLevel = s.has("max_level") && !s.get("max_level").isJsonNull() ? s.get("max_level").getAsInt() : 100;
             Season.configure(key, name, st, en);
             ru.voidrp.battlepass.data.BattlePassData.MAX_LEVEL = Math.max(1, maxLevel);
+            ru.voidrp.battlepass.season.ZoneGates.load(s.get("gates"), getLogger());
+            // tiers were cached for the old gates; fetch again for everyone online
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                final java.util.UUID id = p.getUniqueId();
+                Bukkit.getScheduler().runTaskAsynchronously(this,
+                        () -> ru.voidrp.battlepass.season.ZoneGates.refresh(backendClient, id));
+            }
             getLogger().info("[BattlePass] Active season from backend: " + name + " (" + key
                     + ", " + st + "→" + en + ", cap " + maxLevel + ").");
         } catch (Exception e) {
@@ -242,6 +254,7 @@ public final class BattlePassPlugin extends JavaPlugin {
         amount = Math.round(amount * ru.voidrp.battlepass.listener.BpProgressListener.xpMultiplier());  // x2 on weekends
         amount = NationResearchBonus.apply(player, amount);
         int oldLevel = storage.addXp(player.getUniqueId(), amount);
+        ru.voidrp.battlepass.season.ZoneGates.noticeIfCapped(player, storage.get(player.getUniqueId()));
         int newLevel = storage.get(player.getUniqueId()).getLevel();
         if (newLevel > oldLevel) {
             for (int lvl = oldLevel + 1; lvl <= newLevel; lvl++) {

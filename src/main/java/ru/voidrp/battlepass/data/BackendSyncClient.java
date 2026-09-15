@@ -275,6 +275,36 @@ public final class BackendSyncClient {
         }
     }
 
+    /**
+     * Progression tiers (epochs) the player has unlocked, for zone gates. Blocking, best-effort.
+     * @return the tier keys, or {@code null} on any error (callers must not block on null).
+     */
+    public java.util.Set<String> fetchPlayerTiers(String minecraftUuid) {
+        try {
+            HttpRequest req = withSlug(HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + "/api/v1/game-sync/battlepass/player-tiers?uuid="
+                            + java.net.URLEncoder.encode(minecraftUuid, java.nio.charset.StandardCharsets.UTF_8)))
+                    .header("X-Game-Auth-Secret", gameAuthSecret)
+                    .timeout(TIMEOUT)
+                    .GET())
+                    .build();
+            HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() != 200) {
+                log.warning("[BattlePass] Tier fetch returned " + resp.statusCode() + " for " + minecraftUuid);
+                return null;
+            }
+            java.util.Set<String> out = new java.util.HashSet<>();
+            JsonObject obj = JsonParser.parseString(resp.body()).getAsJsonObject();
+            if (obj.has("tiers") && obj.get("tiers").isJsonArray()) {
+                obj.getAsJsonArray("tiers").forEach(el -> out.add(el.getAsString()));
+            }
+            return out;
+        } catch (Exception e) {
+            log.warning("[BattlePass] Tier fetch failed for " + minecraftUuid + ": " + e.getMessage());
+            return null;
+        }
+    }
+
     public boolean isConfigured() {
         return gameAuthSecret != null && !gameAuthSecret.isBlank();
     }

@@ -56,6 +56,16 @@ public final class BpTrackSync {
         body.addProperty("xp_per_level", (int) BattlePassData.XP_PER_LEVEL);
         body.addProperty("has_premium", hasPremium);
         body.addProperty("ends_in_days", Season.daysUntilReset());
+        JsonArray gates = new JsonArray();
+        for (ru.voidrp.battlepass.season.ZoneGates.Gate g : ru.voidrp.battlepass.season.ZoneGates.all()) {
+            JsonObject go = new JsonObject();
+            go.addProperty("level", g.level());
+            go.addProperty("tier", g.tier());
+            go.addProperty("label", g.label());
+            go.addProperty("unlocked", ru.voidrp.battlepass.season.ZoneGates.isUnlocked(player.getUniqueId(), g));
+            gates.add(go);
+        }
+        body.add("gates", gates);
         body.add("levels", arr);
         String json = body.toString();
 
@@ -70,6 +80,13 @@ public final class BpTrackSync {
         o.addProperty("material", r.getMaterial());
         o.addProperty("count", r.getCount());
         o.addProperty("icon", r.getIcon());
+        if (r.hasCountRange()) o.addProperty("count_max", r.getCountMax());
+        if (r.hasAmountRange()) o.addProperty("amount_max", r.getAmountMax());
+        if (!r.getOptions().isEmpty()) {
+            JsonArray opts = new JsonArray();
+            for (BpReward opt : r.getOptions()) opts.add(reward(opt));
+            o.add("options", opts);
+        }
         return o;
     }
 }

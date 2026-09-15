@@ -83,40 +83,61 @@ public final class SeasonRewards {
                 continue;
             }
             if (!e.getValue().isJsonObject()) continue;
-            JsonObject r = e.getValue().getAsJsonObject();
-            String typeStr = str(r, "type", "MONEY").toUpperCase();
-            BpRewardType type;
-            try {
-                type = BpRewardType.valueOf(typeStr);
-            } catch (IllegalArgumentException iae) {
-                log.warning("[BattlePass] Unknown backend reward type '" + typeStr + "' at level " + level);
-                continue;
-            }
-            BpReward reward = switch (type) {
-                case MONEY -> new BpReward(BpRewardType.MONEY, dbl(r, "amount"));
-                case EXP -> new BpReward(BpRewardType.EXP, dbl(r, "amount"));
-                case VOIDCOIN -> new BpReward(BpRewardType.VOIDCOIN, dbl(r, "amount"));
-                case ITEM -> {
-                    String mat = str(r, "material", "PAPER");
-                    int count = r.has("count") && !r.get("count").isJsonNull() ? r.get("count").getAsInt() : 1;
-                    String name = str(r, "displayName", mat);
-                    yield new BpReward(mat, count, name);
-                }
-                case COMMAND -> {
-                    String cmd = str(r, "command", "");
-                    String name = str(r, "displayName", "Награда");
-                    String icon = r.has("icon") && !r.get("icon").isJsonNull() ? r.get("icon").getAsString() : null;
-                    if (icon == null) {
-                        for (String tok : cmd.split(" ")) {
-                            if (tok.contains(":") && !tok.startsWith("minecraft:give") && !tok.startsWith("/minecraft:give")) { icon = tok; break; }
-                        }
-                    }
-                    yield new BpReward(cmd, name, icon);
-                }
-            };
+            BpReward reward = parseBackendReward(e.getValue().getAsJsonObject(), level, true);
+            if (reward == null) continue;
             map.put(level, reward);
         }
         return map;
+    }
+
+    /** One reward object from the backend; {@code allowChoice=false} for the options of a choice. */
+    private BpReward parseBackendReward(JsonObject r, int level, boolean allowChoice) {
+        String typeStr = str(r, "type", "MONEY").toUpperCase();
+        BpRewardType type;
+        try {
+            type = BpRewardType.valueOf(typeStr);
+        } catch (IllegalArgumentException iae) {
+            log.warning("[BattlePass] Unknown backend reward type '" + typeStr + "' at level " + level);
+            return null;
+        }
+        int countMax = r.has("countMax") && !r.get("countMax").isJsonNull() ? r.get("countMax").getAsInt() : 0;
+        double amountMax = dbl(r, "amountMax");
+        return switch (type) {
+            case MONEY, EXP, VOIDCOIN -> new BpReward(type, dbl(r, "amount")).withRange(0, amountMax);
+            case ITEM -> {
+                String mat = str(r, "material", "PAPER");
+                int count = r.has("count") && !r.get("count").isJsonNull() ? r.get("count").getAsInt() : 1;
+                String name = str(r, "displayName", mat);
+                yield new BpReward(mat, count, name).withRange(countMax, 0);
+            }
+            case COMMAND -> {
+                String cmd = str(r, "command", "");
+                String name = str(r, "displayName", "Награда");
+                String icon = r.has("icon") && !r.get("icon").isJsonNull() ? r.get("icon").getAsString() : null;
+                if (icon == null) {
+                    for (String tok : cmd.split(" ")) {
+                        if (tok.contains(":") && !tok.startsWith("minecraft:give") && !tok.startsWith("/minecraft:give")) { icon = tok; break; }
+                    }
+                }
+                int count = r.has("count") && !r.get("count").isJsonNull() ? r.get("count").getAsInt() : 0;
+                yield new BpReward(cmd, name, icon, count).withRange(countMax, 0);
+            }
+            case CHOICE -> {
+                if (!allowChoice || !r.has("options") || !r.get("options").isJsonArray()) {
+                    log.warning("[BattlePass] Choice reward without options at level " + level);
+                    yield null;
+                }
+                java.util.List<BpReward> opts = new java.util.ArrayList<>();
+                for (JsonElement el : r.getAsJsonArray("options")) {
+                    if (!el.isJsonObject()) continue;
+                    BpReward o = parseBackendReward(el.getAsJsonObject(), level, false);
+                    if (o != null && o.getType() != BpRewardType.CHOICE) opts.add(o);
+                }
+                if (opts.isEmpty()) yield null;
+                String icon = r.has("icon") && !r.get("icon").isJsonNull() ? r.get("icon").getAsString() : opts.get(0).getIcon();
+                yield new BpReward(str(r, "displayName", "Награда на выбор"), icon, opts);
+            }
+        };
     }
 
     private static String str(JsonObject o, String k, String def) {
@@ -181,7 +202,9 @@ public final class SeasonRewards {
                     }
                     yield new BpReward(cmd, name, icon);
                 }
+                case CHOICE -> null;   // choices are backend-only
             };
+            if (reward == null) continue;
             map.put(level, reward);
         }
         return Collections.unmodifiableMap(map);
