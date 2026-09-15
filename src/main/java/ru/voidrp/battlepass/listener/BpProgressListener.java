@@ -438,20 +438,19 @@ public final class BpProgressListener implements Listener {
         }
     }
 
+    /**
+     * Level-up "firework" as particles + sounds only. A real detonated firework rocket deals
+     * explosion damage to everyone around (and to the player at low HP) — players died to it.
+     */
     private void spawnLevelUpFirework(Player player) {
-        org.bukkit.Location loc = player.getLocation().add(0, 1, 0);
-        org.bukkit.entity.Firework fw = (org.bukkit.entity.Firework)
-                loc.getWorld().spawnEntity(loc, org.bukkit.entity.EntityType.FIREWORK_ROCKET);
-        org.bukkit.inventory.meta.FireworkMeta meta = fw.getFireworkMeta();
-        meta.setPower(0);
-        meta.addEffect(org.bukkit.FireworkEffect.builder()
-                .with(org.bukkit.FireworkEffect.Type.BALL_LARGE)
-                .withColor(org.bukkit.Color.YELLOW, org.bukkit.Color.ORANGE)
-                .withFade(org.bukkit.Color.WHITE)
-                .flicker(true)
-                .trail(true)
-                .build());
-        fw.setFireworkMeta(meta);
-        fw.detonate();
+        org.bukkit.Location loc = player.getLocation().add(0, 2.2, 0);
+        org.bukkit.World w = loc.getWorld();
+        w.spawnParticle(org.bukkit.Particle.FIREWORK, loc, 90, 0.6, 0.6, 0.6, 0.18);
+        w.spawnParticle(org.bukkit.Particle.DUST, loc, 40, 0.9, 0.9, 0.9, 0,
+                new org.bukkit.Particle.DustOptions(org.bukkit.Color.YELLOW, 1.4f));
+        w.spawnParticle(org.bukkit.Particle.DUST, loc, 40, 0.9, 0.9, 0.9, 0,
+                new org.bukkit.Particle.DustOptions(org.bukkit.Color.ORANGE, 1.4f));
+        w.playSound(loc, org.bukkit.Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1.0f, 1.0f);
+        w.playSound(loc, org.bukkit.Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 0.8f, 1.0f);
     }
 }
