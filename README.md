@@ -1,12 +1,29 @@
-# 🏆 VoidRP Battle Pass
+<p align="center"><img src=".github/assets/banner.jpg" alt="VoidRP Battle Pass" width="100%"></p>
 
-> Paper-плагин сезонного боевого пропуска VoidRP: Free/Premium-треки на 100 уровней, престиж после сотого,
-> задания сезона, награды предметами, деньгами и Void Coins, интерфейс в WebGUI поверх игры.
+<div align="center">
 
 ![Paper](https://img.shields.io/badge/Paper%20%2F%20Mohist-1.21.1-00AF54)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
 [![Build](https://github.com/VOIDRP-MINECRAFT/voidrp-battlepass/actions/workflows/build.yml/badge.svg)](https://github.com/VOIDRP-MINECRAFT/voidrp-battlepass/actions/workflows/build.yml)
 ![License](https://img.shields.io/badge/license-proprietary-red)
+
+</div>
+
+> Paper-плагин сезонного боевого пропуска VoidRP: Free/Premium-треки на 100 уровней, престиж после сотого,
+> задания сезона, награды предметами, деньгами и Void Coins, интерфейс в WebGUI поверх игры.
+
+---
+
+## 📸 Как это выглядит
+
+<table>
+<tr>
+<td width="50%"><img src=".github/assets/screenshots/game-ui-battlepass.jpg" alt="В игре: трек наград Free / Premium и задания дня"><br><sub>В игре: трек наград Free / Premium и задания дня</sub></td>
+<td width="50%"><img src=".github/assets/screenshots/site-battlepass.jpg" alt="На сайте: рейтинг сезона"><br><sub>На сайте: рейтинг сезона</sub></td>
+</tr>
+</table>
+
+<sub>Страницы [voidrp-site](https://github.com/VOIDRP-MINECRAFT/voidrp-site) на демо-данных; в игре пропуск открывается через WebGUI.</sub>
 
 ---
 
