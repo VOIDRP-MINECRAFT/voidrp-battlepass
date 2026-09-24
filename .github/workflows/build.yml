@@ -3,6 +3,7 @@ name: Build
 on:
   push:
     branches: ['**']
+    tags: ['v*']
   pull_request:
   workflow_dispatch:
 
@@ -14,22 +15,24 @@ jobs:
   build:
     name: Gradle build (with sibling deps)
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       # build.gradle.kts compiles against ../voidrp_gamesync_plugin/build/libs/*.jar,
       # so recreate the sibling layout the local workspace has.
       - name: Checkout battlepass
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: voidrp_battlepass
 
       - name: Checkout gamesync (compile dep)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: VOIDRP-MINECRAFT/voidrp-gamesync-plugin
           path: voidrp_gamesync_plugin
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: temurin
@@ -55,9 +58,18 @@ jobs:
 
       - name: Upload jars
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: jars
           path: 'voidrp_battlepass/**/build/libs/*.jar'
           if-no-files-found: warn
           retention-days: 14
+
+      # A tag like v1.2.0 publishes the built jars as a GitHub release, so the server
+      # owner downloads a file instead of building one.
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: voidrp_battlepass/build/libs/*.jar
+          generate_release_notes: true
